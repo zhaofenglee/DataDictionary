@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.prod.json",
+  "compilerOptions": {
+    "paths": {
+      "@j-s.Abp/data-dictionary": [
+        "projects/data-dictionary/src/public-api.ts"
+      ],
+      "@j-s.Abp/data-dictionary/config": [
+        "projects/data-dictionary/config/src/public-api.ts"
+      ],
+      "@proxy": ["projects/data-dictionary/src/lib/proxy/index.ts"],
+      "@proxy/*": ["projects/data-dictionary/src/lib/proxy/*"]
+    }
+  }
+}

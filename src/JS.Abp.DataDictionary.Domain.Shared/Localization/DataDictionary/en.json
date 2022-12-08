@@ -1,0 +1,33 @@
+{
+  "culture": "en",
+  "texts": {
+    "MyAccount": "My account",
+    "SamplePageMessage": "A sample page for the DataDictionary module",
+    "Permission:DataDictionaries": "Data Dictionaries",
+    "Permission:DataDictionary": "Data Dictionary",
+    "Permission:Create": "Create",
+    "Permission:Edit": "Edit",
+    "Permission:Delete": "Delete",
+    "Code": "Code",
+    "DisplayText": "Display Text",
+    "Description": "Description",
+    "IsStatic": "Is Static",
+    "DataDictionaries": "Data Dictionaries",
+    "NewDataDictionary": "New Data Dictionary",
+    "Actions": "Actions",
+    "SuccessfullyDeleted": "Successfully deleted",
+    "DeleteConfirmationMessage": "Are you sure you want to delete this record?",
+    "Search": "Search",
+    "Pick": "Pick",
+    "SeeAdvancedFilters": "Advanced filters",
+    "ItemAlreadyAdded": "This item is already added.",
+    "ExportToExcel": "Export to Excel",
+    "Menu:DataDictionaries": "Data Dictionaries",
+    "Menu:DataDictionary": "Data Dictionary",
+    "Permission:DataDictionaryItems": "Data Dictionary Items",
+    "DataDictionaryItems": "Data Dictionary Items",
+    "NewDataDictionaryItem": "New Data Dictionary Item",
+    "Menu:DataDictionaryItems": "Data Dictionary Items",
+    "DataDictionary": "Data dictionary"
+  }
+}

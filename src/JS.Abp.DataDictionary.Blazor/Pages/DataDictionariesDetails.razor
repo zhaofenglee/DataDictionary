@@ -1,0 +1,276 @@
+﻿@page "/data-dictionaries-details/{DetailId:guid}"
+@attribute [Authorize(DataDictionaryPermissions.DataDictionaries.Default)]
+@using JS.Abp.DataDictionary.DataDictionaries
+@using JS.Abp.DataDictionary.DataDictionaryItems
+@using JS.Abp.DataDictionary.Permissions
+@using Microsoft.AspNetCore.Authorization
+@using Volo.Abp.BlazoriseUI.Components
+@inherits DataDictionaryComponentBase
+@inject IDataDictionariesAppService DataDictionariesAppService
+@inject IDataDictionaryItemsAppService DataDictionaryItemsAppService
+
+
+<Card>
+    <CardBody>
+        <Row>
+            <Column>
+                <Paragraph TextAlignment="TextAlignment.Start">
+                    <span class="text-muted">@L["Id"]</span>
+                    <p class="h4">@DetailId</p>
+                </Paragraph>
+            </Column>
+             <Column>
+                <Paragraph TextAlignment="TextAlignment.Start">
+                    <span class="text-muted">@L["DataDictionary:Code"]</span>
+                    <p class="h4">@EditingDataDictionary.Code</p>
+                </Paragraph>
+            </Column>
+        </Row>
+           <Row>
+            <Column>
+                <Paragraph TextAlignment="TextAlignment.Start">
+                    <span class="text-muted">@L["DisplayText"]</span>
+                    <p class="h4">@EditingDataDictionary.DisplayText</p>
+                </Paragraph>
+            </Column>
+             <Column>
+                <Paragraph TextAlignment="TextAlignment.Start">
+                    <span class="text-muted">@L["Description"]</span>
+                    <p class="h4">@EditingDataDictionary.Description</p>
+                </Paragraph>
+            </Column>
+        </Row>
+        @if (CanCreateDataDictionary)
+        {
+            <Paragraph TextAlignment="TextAlignment.End">
+                <Button Color="Color.Primary" Style="margin-right: 20px"
+                    Clicked="OpenCreateDataDictionaryItemModalAsync">
+                    <i class="fa fa-plus"></i>@L["NewDataDictionaryItem"]
+                </Button>
+            </Paragraph>
+        }
+        
+        <DataGrid TItem="DataDictionaryItemWithNavigationPropertiesDto"
+                  Data="DataDictionaryItemList"
+                  ReadData="OnDataGridReadAsync"
+                  TotalItems="TotalCount"
+                  ShowPager="true"
+                  Responsive="true"
+                  PageSize="PageSize">
+            <DataGridColumns>
+                <DataGridEntityActionsColumn TItem="DataDictionaryItemWithNavigationPropertiesDto" @ref="@EntityActionsColumn">
+                    <DisplayTemplate>
+                        <EntityActions TItem="DataDictionaryItemWithNavigationPropertiesDto" EntityActionsColumn="@EntityActionsColumn">
+                            <EntityAction TItem="DataDictionaryItemWithNavigationPropertiesDto"
+                                          Visible="@CanEditDataDictionary"
+                                          Clicked="async () => await OpenEditDataDictionaryItemModalAsync(context)"
+                                          Text="@L["Edit"]"></EntityAction>
+                            <EntityAction TItem="DataDictionaryItemWithNavigationPropertiesDto"
+                                          Visible="@CanDeleteDataDictionary"
+                                          Clicked="() => DeleteDataDictionaryItemAsync(context)"
+                                          ConfirmationMessage="@(()=> L["DeleteConfirmationMessage"])"
+                                          Text="@L["Delete"]"></EntityAction>
+                        </EntityActions>
+                    </DisplayTemplate>
+                </DataGridEntityActionsColumn>
+                       
+                <DataGridColumn TItem="DataDictionaryItemWithNavigationPropertiesDto"
+                                Field="DataDictionaryItem.Sequence"
+                                Caption="@L["Sequence"]">
+                </DataGridColumn>
+                
+                <DataGridColumn TItem="DataDictionaryItemWithNavigationPropertiesDto"
+                                Field="DataDictionaryItem.Code"
+                                Caption="@L["DataDictionaryItem:Code"]">
+                </DataGridColumn>
+        
+                <DataGridColumn TItem="DataDictionaryItemWithNavigationPropertiesDto"
+                                Field="DataDictionaryItem.DisplayText"
+                                Caption="@L["DisplayText"]">
+                </DataGridColumn>
+        
+                <DataGridColumn TItem="DataDictionaryItemWithNavigationPropertiesDto"
+                                Field="DataDictionaryItem.Description"
+                                Caption="@L["Description"]">
+                </DataGridColumn>
+        
+                <DataGridColumn TItem="DataDictionaryItemWithNavigationPropertiesDto"
+                                Field="DataDictionaryItem.IsStatic"
+                                Caption="@L["IsStatic"]">
+                    <DisplayTemplate>
+                        @if (context.DataDictionaryItem.IsStatic)
+                        {
+                            <Icon TextColor="TextColor.Success" Name="@IconName.Check" />
+                        }
+                        else
+                        {
+                            <Icon TextColor="TextColor.Danger" Name="@IconName.Times" />
+                        }
+                    </DisplayTemplate>
+                </DataGridColumn>
+        
+        
+            </DataGridColumns>
+        </DataGrid>
+    </CardBody>
+</Card>
+
+@* ************************* CREATE MODAL ************************* *@
+<Modal @ref="CreateDataDictionaryItemModal" Closing="@CreateDataDictionaryItemModal.CancelClosingModalWhenFocusLost">
+    <ModalContent Centered="true">
+        <Form id="CreateDataDictionaryItemForm">
+            <ModalHeader>
+                <ModalTitle>@L["NewDataDictionaryItem"]</ModalTitle>
+                <CloseButton Clicked="CloseCreateDataDictionaryItemModalAsync" />
+            </ModalHeader>
+            <ModalBody>
+                <Validations @ref="@NewDataDictionaryItemValidations"
+                            Mode="ValidationMode.Auto"
+                            Model="@NewDataDictionaryItem"
+                            ValidateOnLoad="false">
+                     
+                    
+                    <Validation>
+                        <Field>
+                            <FieldLabel>@L["DataDictionaryItem:Code"] *</FieldLabel>
+                            <TextEdit @bind-Text="@NewDataDictionaryItem.Code" MaxLength="DataDictionaryItemConsts.CodeMaxLength">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+
+
+                    <Validation>
+                        <Field>
+                            <FieldLabel>@L["DisplayText"] *</FieldLabel>
+                            <TextEdit @bind-Text="@NewDataDictionaryItem.DisplayText" MaxLength="DataDictionaryItemConsts.DisplayTextMaxLength">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+
+
+                    <Validation>
+                        <Field>
+                            <FieldLabel>@L["Description"]</FieldLabel>
+                            <TextEdit @bind-Text="@NewDataDictionaryItem.Description" MaxLength="DataDictionaryItemConsts.DescriptionMaxLength">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+
+                      <Validation>
+                        <Field>
+                            <FieldLabel>@L["Sequence"] *</FieldLabel>
+                            <NumericEdit @bind-Value="@NewDataDictionaryItem.Sequence" >
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </NumericEdit>
+                        </Field>
+                    </Validation>
+
+                    <Field>
+                        <Check TValue="bool" @bind-Checked="@NewDataDictionaryItem.IsStatic">@L["IsStatic"]</Check>
+                    </Field>
+
+                    
+                    
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseCreateDataDictionaryItemModalAsync">
+                    @L["Cancel"]
+                </Button>
+                <SubmitButton Form="CreateDataDictionaryItemForm" Clicked="CreateDataDictionaryItemAsync" />
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>
+
+@* ************************* EDIT MODAL ************************* *@
+<Modal @ref="EditDataDictionaryItemModal" Closing="@EditDataDictionaryItemModal.CancelClosingModalWhenFocusLost">
+    <ModalContent Centered="true">
+        <Form id="EditDataDictionaryItemForm">
+            <ModalHeader>
+                <ModalTitle>@L["Update"]</ModalTitle>
+                <CloseButton Clicked="CloseEditDataDictionaryItemModalAsync" />
+            </ModalHeader>
+            <ModalBody>
+                <Validations @ref="@EditingDataDictionaryItemValidations"
+                            Mode="ValidationMode.Auto"
+                            Model="@EditingDataDictionaryItem"
+                            ValidateOnLoad="false">
+                     
+                    
+                    <Validation>
+                        <Field>
+                            <FieldLabel>@L["DataDictionaryItem:Code"] *</FieldLabel>
+                            <TextEdit @bind-Text="@EditingDataDictionaryItem.Code" MaxLength="DataDictionaryItemConsts.CodeMaxLength">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+
+
+                    <Validation>
+                        <Field>
+                            <FieldLabel>@L["DisplayText"] *</FieldLabel>
+                            <TextEdit @bind-Text="@EditingDataDictionaryItem.DisplayText" MaxLength="DataDictionaryItemConsts.DisplayTextMaxLength">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+
+
+                    <Validation>
+                        <Field>
+                            <FieldLabel>@L["Description"]</FieldLabel>
+                            <TextEdit @bind-Text="@EditingDataDictionaryItem.Description" MaxLength="DataDictionaryItemConsts.DescriptionMaxLength">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+
+                      <Validation>
+                        <Field>
+                            <FieldLabel>@L["Sequence"] *</FieldLabel>
+                            <NumericEdit @bind-Value="@EditingDataDictionaryItem.Sequence">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </NumericEdit>
+                        </Field>
+                    </Validation>
+
+                    <Field>
+                        <Check TValue="bool" @bind-Checked="@EditingDataDictionaryItem.IsStatic">@L["IsStatic"]</Check>
+                    </Field>
+
+                    
+                    
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseEditDataDictionaryItemModalAsync">
+                    @L["Cancel"]
+                </Button>
+                <SubmitButton Form="CreateDataDictionaryItemForm" Clicked="UpdateDataDictionaryItemAsync" />
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>

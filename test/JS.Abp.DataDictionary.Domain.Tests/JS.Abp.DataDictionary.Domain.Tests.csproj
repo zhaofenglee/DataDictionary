@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>JS.Abp.DataDictionary</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
+    <ProjectReference Include="..\JS.Abp.DataDictionary.EntityFrameworkCore.Tests\JS.Abp.DataDictionary.EntityFrameworkCore.Tests.csproj" />
+  </ItemGroup>
+
+</Project>

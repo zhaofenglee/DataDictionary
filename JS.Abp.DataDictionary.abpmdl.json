@@ -1,0 +1,111 @@
+{
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {},
+      "host": {}
+    }
+  },
+  "packages": {
+    "JS.Abp.DataDictionary.Domain.Shared": {
+      "path": "src/JS.Abp.DataDictionary.Domain.Shared/JS.Abp.DataDictionary.Domain.Shared.abppkg.json",
+      "folder": "src"
+    },
+    "JS.Abp.DataDictionary.Domain": {
+      "path": "src/JS.Abp.DataDictionary.Domain/JS.Abp.DataDictionary.Domain.abppkg.json",
+      "folder": "src"
+    },
+    "JS.Abp.DataDictionary.Application.Contracts": {
+      "path": "src/JS.Abp.DataDictionary.Application.Contracts/JS.Abp.DataDictionary.Application.Contracts.abppkg.json",
+      "folder": "src"
+    },
+    "JS.Abp.DataDictionary.Application": {
+      "path": "src/JS.Abp.DataDictionary.Application/JS.Abp.DataDictionary.Application.abppkg.json",
+      "folder": "src"
+    },
+    "JS.Abp.DataDictionary.EntityFrameworkCore": {
+      "path": "src/JS.Abp.DataDictionary.EntityFrameworkCore/JS.Abp.DataDictionary.EntityFrameworkCore.abppkg.json",
+      "folder": "src"
+    },
+    "JS.Abp.DataDictionary.MongoDB": {
+      "path": "src/JS.Abp.DataDictionary.MongoDB/JS.Abp.DataDictionary.MongoDB.abppkg.json",
+      "folder": "src"
+    },
+    "JS.Abp.DataDictionary.HttpApi": {
+      "path": "src/JS.Abp.DataDictionary.HttpApi/JS.Abp.DataDictionary.HttpApi.abppkg.json",
+      "folder": "src"
+    },
+    "JS.Abp.DataDictionary.HttpApi.Client": {
+      "path": "src/JS.Abp.DataDictionary.HttpApi.Client/JS.Abp.DataDictionary.HttpApi.Client.abppkg.json",
+      "folder": "src"
+    },
+    "JS.Abp.DataDictionary.TestBase": {
+      "path": "test/JS.Abp.DataDictionary.TestBase/JS.Abp.DataDictionary.TestBase.abppkg.json",
+      "folder": "test"
+    },
+    "JS.Abp.DataDictionary.EntityFrameworkCore.Tests": {
+      "path": "test/JS.Abp.DataDictionary.EntityFrameworkCore.Tests/JS.Abp.DataDictionary.EntityFrameworkCore.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "JS.Abp.DataDictionary.MongoDB.Tests": {
+      "path": "test/JS.Abp.DataDictionary.MongoDB.Tests/JS.Abp.DataDictionary.MongoDB.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "JS.Abp.DataDictionary.Domain.Tests": {
+      "path": "test/JS.Abp.DataDictionary.Domain.Tests/JS.Abp.DataDictionary.Domain.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "JS.Abp.DataDictionary.Application.Tests": {
+      "path": "test/JS.Abp.DataDictionary.Application.Tests/JS.Abp.DataDictionary.Application.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "JS.Abp.DataDictionary.HttpApi.Host": {
+      "path": "host/JS.Abp.DataDictionary.HttpApi.Host/JS.Abp.DataDictionary.HttpApi.Host.abppkg.json",
+      "folder": "host"
+    },
+    "JS.Abp.DataDictionary.Web": {
+      "path": "src/JS.Abp.DataDictionary.Web/JS.Abp.DataDictionary.Web.abppkg.json",
+      "folder": "src"
+    },
+    "JS.Abp.DataDictionary.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/JS.Abp.DataDictionary.HttpApi.Client.ConsoleTestApp/JS.Abp.DataDictionary.HttpApi.Client.ConsoleTestApp.abppkg.json",
+      "folder": "test"
+    },
+    "JS.Abp.DataDictionary.Web.Host": {
+      "path": "host/JS.Abp.DataDictionary.Web.Host/JS.Abp.DataDictionary.Web.Host.abppkg.json",
+      "folder": "host"
+    },
+    "JS.Abp.DataDictionary.AuthServer": {
+      "path": "host/JS.Abp.DataDictionary.AuthServer/JS.Abp.DataDictionary.AuthServer.abppkg.json",
+      "folder": "host"
+    },
+    "JS.Abp.DataDictionary.Host.Shared": {
+      "path": "host/JS.Abp.DataDictionary.Host.Shared/JS.Abp.DataDictionary.Host.Shared.abppkg.json",
+      "folder": "host"
+    },
+    "JS.Abp.DataDictionary.Web.Unified": {
+      "path": "host/JS.Abp.DataDictionary.Web.Unified/JS.Abp.DataDictionary.Web.Unified.abppkg.json",
+      "folder": "host"
+    },
+    "JS.Abp.DataDictionary.Blazor": {
+      "path": "src/JS.Abp.DataDictionary.Blazor/JS.Abp.DataDictionary.Blazor.abppkg.json",
+      "folder": "src"
+    },
+    "JS.Abp.DataDictionary.Blazor.Host": {
+      "path": "host/JS.Abp.DataDictionary.Blazor.Host/JS.Abp.DataDictionary.Blazor.Host.abppkg.json",
+      "folder": "host"
+    },
+    "JS.Abp.DataDictionary.Blazor.Server": {
+      "path": "src/JS.Abp.DataDictionary.Blazor.Server/JS.Abp.DataDictionary.Blazor.Server.abppkg.json",
+      "folder": "src"
+    },
+    "JS.Abp.DataDictionary.Blazor.WebAssembly": {
+      "path": "src/JS.Abp.DataDictionary.Blazor.WebAssembly/JS.Abp.DataDictionary.Blazor.WebAssembly.abppkg.json",
+      "folder": "src"
+    },
+    "JS.Abp.DataDictionary.Blazor.Server.Host": {
+      "path": "host/JS.Abp.DataDictionary.Blazor.Server.Host/JS.Abp.DataDictionary.Blazor.Server.Host.abppkg.json",
+      "folder": "host"
+    }
+  }
+}

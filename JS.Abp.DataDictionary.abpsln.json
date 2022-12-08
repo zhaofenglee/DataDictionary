@@ -1,0 +1,7 @@
+{
+  "modules": {
+    "JS.Abp.DataDictionary": {
+      "path": "JS.Abp.DataDictionary.abpmdl.json"
+    }
+  }
+}

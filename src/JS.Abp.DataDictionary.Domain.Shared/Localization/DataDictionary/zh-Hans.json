@@ -1,0 +1,24 @@
+{
+  "culture": "zh-Hans",
+  "texts": {
+    "MyAccount": "我的账户",
+    "SamplePageMessage": "DataDictionary模块的示例页面",
+    "DataDictionaries": "数据字典",
+    "DataPermissions": "数据权限",
+    "ExportToExcel": "导出Excel",
+    "Menu:DataDictionaries": "数据字典",
+    "Search": "查询",
+    "NewDataDictionary": "新建数据字典",
+    "EditDetails": "编辑明细",
+    "DataDictionary:Code": "字典代码",
+    "DisplayText": "显示文本",
+    "Description": "描述",
+    "IsStatic": "是否启用",
+    "DataDictionaryItem:Code": "字典项目代码",
+    "Sequence": "排序",
+    "Update": "更新",
+    "NewDataDictionaryItem": "新建项目",
+    "SuccessfullyDeleted": "成功删除",
+    "DeleteConfirmationMessage": "是否确认删除记录?"
+  }
+}
