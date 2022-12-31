@@ -76,8 +76,16 @@ namespace JS.Abp.DataDictionary.Blazor.Pages
         }
         private async Task GetModelInfoAsync()
         {
-            var modelInfo = await DataDictionariesAppService.GetAsync(DetailId);
-            EditingDataDictionary = ObjectMapper.Map<DataDictionaryDto, DataDictionaryUpdateDto>(modelInfo);
+            try
+            {
+                var modelInfo = await DataDictionariesAppService.GetAsync(DetailId);
+                EditingDataDictionary = ObjectMapper.Map<DataDictionaryDto, DataDictionaryUpdateDto>(modelInfo);
+            }
+            catch (Exception ex)
+            {
+                await HandleErrorAsync(ex);
+            }
+          
         }
         private async Task GetModelDetailAsync()
         {

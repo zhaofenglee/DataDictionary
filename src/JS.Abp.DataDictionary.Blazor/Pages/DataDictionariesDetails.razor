@@ -12,44 +12,48 @@
 
 <Card>
     <CardBody>
-        <Row>
-            <Column>
-                <Paragraph TextAlignment="TextAlignment.Start">
-                    <span class="text-muted">@L["Id"]</span>
-                    <p class="h4">@DetailId</p>
-                </Paragraph>
-            </Column>
-             <Column>
-                <Paragraph TextAlignment="TextAlignment.Start">
-                    <span class="text-muted">@L["DataDictionary:Code"]</span>
-                    <p class="h4">@EditingDataDictionary.Code</p>
-                </Paragraph>
-            </Column>
-        </Row>
-           <Row>
-            <Column>
-                <Paragraph TextAlignment="TextAlignment.Start">
-                    <span class="text-muted">@L["DisplayText"]</span>
-                    <p class="h4">@EditingDataDictionary.DisplayText</p>
-                </Paragraph>
-            </Column>
-             <Column>
-                <Paragraph TextAlignment="TextAlignment.Start">
-                    <span class="text-muted">@L["Description"]</span>
-                    <p class="h4">@EditingDataDictionary.Description</p>
-                </Paragraph>
-            </Column>
-        </Row>
+        @if (EditingDataDictionary != null)
+        {
+            <Row>
+                <Column>
+                    <Paragraph TextAlignment="TextAlignment.Start">
+                        <span class="text-muted">@L["Id"]</span>
+                        <p class="h4">@DetailId</p>
+                    </Paragraph>
+                </Column>
+                <Column>
+                    <Paragraph TextAlignment="TextAlignment.Start">
+                        <span class="text-muted">@L["DataDictionary:Code"]</span>
+                        <p class="h4">@EditingDataDictionary.Code</p>
+                    </Paragraph>
+                </Column>
+            </Row>
+            <Row>
+                <Column>
+                    <Paragraph TextAlignment="TextAlignment.Start">
+                        <span class="text-muted">@L["DisplayText"]</span>
+                        <p class="h4">@EditingDataDictionary.DisplayText</p>
+                    </Paragraph>
+                </Column>
+                <Column>
+                    <Paragraph TextAlignment="TextAlignment.Start">
+                        <span class="text-muted">@L["Description"]</span>
+                        <p class="h4">@EditingDataDictionary.Description</p>
+                    </Paragraph>
+                </Column>
+            </Row>
+        }
+        
         @if (CanCreateDataDictionary)
         {
             <Paragraph TextAlignment="TextAlignment.End">
                 <Button Color="Color.Primary" Style="margin-right: 20px"
-                    Clicked="OpenCreateDataDictionaryItemModalAsync">
+                        Clicked="OpenCreateDataDictionaryItemModalAsync">
                     <i class="fa fa-plus"></i>@L["NewDataDictionaryItem"]
                 </Button>
             </Paragraph>
         }
-        
+
         <DataGrid TItem="DataDictionaryItemWithNavigationPropertiesDto"
                   Data="DataDictionaryItemList"
                   ReadData="OnDataGridReadAsync"
@@ -68,48 +72,48 @@
                             <EntityAction TItem="DataDictionaryItemWithNavigationPropertiesDto"
                                           Visible="@CanDeleteDataDictionary"
                                           Clicked="() => DeleteDataDictionaryItemAsync(context)"
-                                          ConfirmationMessage="@(()=> L["DeleteConfirmationMessage"])"
+                                          ConfirmationMessage="@(() => L["DeleteConfirmationMessage"])"
                                           Text="@L["Delete"]"></EntityAction>
                         </EntityActions>
                     </DisplayTemplate>
                 </DataGridEntityActionsColumn>
-                       
+
                 <DataGridColumn TItem="DataDictionaryItemWithNavigationPropertiesDto"
                                 Field="DataDictionaryItem.Sequence"
                                 Caption="@L["Sequence"]">
                 </DataGridColumn>
-                
+
                 <DataGridColumn TItem="DataDictionaryItemWithNavigationPropertiesDto"
                                 Field="DataDictionaryItem.Code"
                                 Caption="@L["DataDictionaryItem:Code"]">
                 </DataGridColumn>
-        
+
                 <DataGridColumn TItem="DataDictionaryItemWithNavigationPropertiesDto"
                                 Field="DataDictionaryItem.DisplayText"
                                 Caption="@L["DisplayText"]">
                 </DataGridColumn>
-        
+
                 <DataGridColumn TItem="DataDictionaryItemWithNavigationPropertiesDto"
                                 Field="DataDictionaryItem.Description"
                                 Caption="@L["Description"]">
                 </DataGridColumn>
-        
+
                 <DataGridColumn TItem="DataDictionaryItemWithNavigationPropertiesDto"
                                 Field="DataDictionaryItem.IsStatic"
                                 Caption="@L["IsStatic"]">
                     <DisplayTemplate>
                         @if (context.DataDictionaryItem.IsStatic)
                         {
-                            <Icon TextColor="TextColor.Success" Name="@IconName.Check" />
+                            <Icon TextColor="TextColor.Success" Name="@IconName.Check"/>
                         }
                         else
                         {
-                            <Icon TextColor="TextColor.Danger" Name="@IconName.Times" />
+                            <Icon TextColor="TextColor.Danger" Name="@IconName.Times"/>
                         }
                     </DisplayTemplate>
                 </DataGridColumn>
-        
-        
+
+
             </DataGridColumns>
         </DataGrid>
     </CardBody>
