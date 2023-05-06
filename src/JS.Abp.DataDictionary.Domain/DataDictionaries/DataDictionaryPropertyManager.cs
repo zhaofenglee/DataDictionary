@@ -13,11 +13,7 @@ namespace JS.Abp.DataDictionary.DataDictionaries
 {
     public class DataDictionaryPropertyManager : DomainService
     {
-        private readonly IDataDictionaryManager _dataDictionaryManager;
-        public DataDictionaryPropertyManager(IDataDictionaryManager dataDictionaryManager)
-        {
-            _dataDictionaryManager = dataDictionaryManager;
-        }
+        protected IDataDictionaryStore dataDictionaryStore => LazyServiceProvider.LazyGetRequiredService<IDataDictionaryStore>();
 
         public virtual async Task<TDto> GetAsync<TDto>(TDto sourceDto)
         {
@@ -39,7 +35,7 @@ namespace JS.Abp.DataDictionary.DataDictionaries
             {
                 foreach(var info in list)
                 {
-                    var dataDictionary = await _dataDictionaryManager.FindByCodeAsync(info.DictionaryCode);
+                    var dataDictionary = await dataDictionaryStore.FindByCodeAsync(info.DictionaryCode);
                     if (dataDictionary != null && dataDictionary.Items.Count > 0)
                     {
                         var dataCode = (string)info.Property.GetValue(sourceDto);
@@ -47,8 +43,12 @@ namespace JS.Abp.DataDictionary.DataDictionaries
                         {
                             break;
                         }
-                        var value = dataDictionary.Items.Where(c => c.Code == dataCode).FirstOrDefault();
-                        info.Property.SetValue(sourceDto, value?.DisplayText);
+                        var value = dataDictionary.Items.Where(c => c.Code == dataCode)?.FirstOrDefault();
+                        if (value!=null)
+                        {
+                            info.Property.SetValue(sourceDto, value?.DisplayText);
+                        }
+                        
                     }
 
                 }

@@ -32,18 +32,6 @@ namespace JS.Abp.DataDictionary.DataDictionaries
             return await _dataDictionaryRepository.InsertAsync(dataDictionary);
         }
 
-        public async Task<DataDictionary> FindByCodeAsync(string code)
-        {
-            return await _cache.GetOrAddAsync(
-               code,
-               async () => await GetDictFromDatabaseAsync(code),
-               () => new DistributedCacheEntryOptions
-               {
-                   AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(1)
-               }
-           );
-        }
-
         public async Task<DataDictionary> UpdateAsync(
             Guid id,
             string code, string displayText, string description, bool isStatic, [CanBeNull] string concurrencyStamp = null
@@ -62,12 +50,6 @@ namespace JS.Abp.DataDictionary.DataDictionaries
             dataDictionary.SetConcurrencyStampIfNotNull(concurrencyStamp);
             return await _dataDictionaryRepository.UpdateAsync(dataDictionary);
         }
-        private async Task<DataDictionary> GetDictFromDatabaseAsync(string code)
-        {
-            var queryable = await _dataDictionaryRepository.WithDetailsAsync(x => x.Items);
-            var query = queryable.Where(x => x.Code == code);
 
-            return await AsyncExecuter.FirstOrDefaultAsync(query);
-        }
     }
 }

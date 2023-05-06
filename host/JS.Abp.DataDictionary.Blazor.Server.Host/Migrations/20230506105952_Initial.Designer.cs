@@ -13,8 +13,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
 {
     [DbContext(typeof(UnifiedDbContext))]
-    [Migration("20230107031940_Update_Abp7")]
-    partial class UpdateAbp7
+    [Migration("20230506105952_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,7 +96,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppDataDictionaries", (string)null);
+                    b.ToTable("AbpDataDictionaries", (string)null);
                 });
 
             modelBuilder.Entity("JS.Abp.DataDictionary.DataDictionaryItems.DataDictionaryItem", b =>
@@ -179,7 +179,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
 
                     b.HasIndex("DataDictionaryId");
 
-                    b.ToTable("AppDataDictionaryItems", (string)null);
+                    b.ToTable("AbpDataDictionaryItems", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
@@ -652,6 +652,9 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
 
+                    b.Property<int>("EntityVersion")
+                        .HasColumnType("int");
+
                     b.Property<string>("ExtraProperties")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
@@ -837,6 +840,9 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false)
                         .HasColumnName("EmailConfirmed");
+
+                    b.Property<int>("EntityVersion")
+                        .HasColumnType("int");
 
                     b.Property<string>("ExtraProperties")
                         .HasColumnType("nvarchar(max)")
@@ -1116,6 +1122,9 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
                         .HasColumnType("nvarchar(128)")
                         .HasColumnName("DisplayName");
 
+                    b.Property<int>("EntityVersion")
+                        .HasColumnType("int");
+
                     b.Property<string>("ExtraProperties")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
@@ -1352,6 +1361,9 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime2")
                         .HasColumnName("DeletionTime");
+
+                    b.Property<int>("EntityVersion")
+                        .HasColumnType("int");
 
                     b.Property<string>("ExtraProperties")
                         .HasColumnType("nvarchar(max)")

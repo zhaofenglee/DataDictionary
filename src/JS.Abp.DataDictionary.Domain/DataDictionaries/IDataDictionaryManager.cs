@@ -8,7 +8,6 @@ namespace JS.Abp.DataDictionary.DataDictionaries
 {
     public interface IDataDictionaryManager
     {
-        Task<DataDictionary> FindByCodeAsync(string code);
         Task<DataDictionary> CreateAsync(
         string code, string displayText, string description, bool isStatic);
         Task<DataDictionary> UpdateAsync(

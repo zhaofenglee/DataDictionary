@@ -93,7 +93,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppDataDictionaries", (string)null);
+                    b.ToTable("AbpDataDictionaries", (string)null);
                 });
 
             modelBuilder.Entity("JS.Abp.DataDictionary.DataDictionaryItems.DataDictionaryItem", b =>
@@ -176,7 +176,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
 
                     b.HasIndex("DataDictionaryId");
 
-                    b.ToTable("AppDataDictionaryItems", (string)null);
+                    b.ToTable("AbpDataDictionaryItems", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>

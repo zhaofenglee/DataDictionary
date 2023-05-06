@@ -27,7 +27,9 @@ namespace JS.Abp.DataDictionary.DataDictionaries
         private readonly IDistributedCache<DataDictionaryExcelDownloadTokenCacheItem, string> _excelDownloadTokenCache;
         private readonly IDataDictionaryRepository _dataDictionaryRepository;
         private readonly IDataDictionaryManager _dataDictionaryManager;
-       
+        protected DataDictionaryPropertyManager dataDictionaryProperty => LazyServiceProvider.LazyGetRequiredService<DataDictionaryPropertyManager>();
+        protected DataDictionaryStore dataDictionaryStore => LazyServiceProvider.LazyGetRequiredService<DataDictionaryStore>();
+        
         public DataDictionariesAppService(IDataDictionaryRepository dataDictionaryRepository, IDataDictionaryManager dataDictionaryManager, IDistributedCache<DataDictionaryExcelDownloadTokenCacheItem, string> excelDownloadTokenCache)
         {
             _excelDownloadTokenCache = excelDownloadTokenCache;
@@ -40,6 +42,7 @@ namespace JS.Abp.DataDictionary.DataDictionaries
             var totalCount = await _dataDictionaryRepository.GetCountAsync(input.FilterText, input.Code, input.DisplayText, input.Description, input.IsStatic);
             var items = await _dataDictionaryRepository.GetListAsync(input.FilterText, input.Code, input.DisplayText, input.Description, input.IsStatic, input.Sorting, input.MaxResultCount, input.SkipCount);
 
+            
             return new PagedResultDto<DataDictionaryDto>
             {
                 TotalCount = totalCount,
@@ -49,7 +52,8 @@ namespace JS.Abp.DataDictionary.DataDictionaries
 
         public virtual async Task<DataDictionaryDto> GetAsync(Guid id)
         {
-            return ObjectMapper.Map<DataDictionary, DataDictionaryDto>(await _dataDictionaryRepository.GetAsync(id));
+            var item =  ObjectMapper.Map<DataDictionary, DataDictionaryDto>(await _dataDictionaryRepository.GetAsync(id));
+            return item;//await dataDictionaryProperty.GetAsync(item);
         }
 
         [Authorize(DataDictionaryPermissions.DataDictionaries.Delete)]
@@ -119,8 +123,7 @@ namespace JS.Abp.DataDictionary.DataDictionaries
 
         public virtual async Task<DataDictionaryDto> FindByCodeAsync(string code)
         {
-            return ObjectMapper.Map<DataDictionary, DataDictionaryDto>(await _dataDictionaryManager.FindByCodeAsync(code)) ;
-
+            return ObjectMapper.Map<DataDictionary, DataDictionaryDto>(await dataDictionaryStore.FindByCodeAsync(code)) ;
         }
         
        

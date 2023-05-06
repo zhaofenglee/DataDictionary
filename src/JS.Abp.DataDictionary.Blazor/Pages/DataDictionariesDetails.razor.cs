@@ -13,12 +13,15 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.BlazoriseUI.Components;
 using JS.Abp.DataDictionary.Permissions;
 using Microsoft.AspNetCore.Authorization;
+using Volo.Abp.AspNetCore.Components.Web.Theming.PageToolbars;
 
 namespace JS.Abp.DataDictionary.Blazor.Pages
 {
     public partial class DataDictionariesDetails
     {
         [Parameter] public Guid DetailId { get; set; }
+        protected List<Volo.Abp.BlazoriseUI.BreadcrumbItem> BreadcrumbItems = new List<Volo.Abp.BlazoriseUI.BreadcrumbItem>();
+        protected PageToolbar Toolbar {get;} = new PageToolbar();
         private DataDictionaryUpdateDto EditingDataDictionary { get; set; }
         private IReadOnlyList<DataDictionaryItemWithNavigationPropertiesDto> DataDictionaryItemList { get; set; }
         private int PageSize { get; } = LimitedResultRequestDto.DefaultMaxResultCount;
@@ -51,8 +54,15 @@ namespace JS.Abp.DataDictionary.Blazor.Pages
         }
         protected override async Task OnInitializedAsync()
         {
+            await SetBreadcrumbItemsAsync();
             await SetPermissionsAsync();
             await GetModelInfoAsync();
+        }
+        protected virtual ValueTask SetBreadcrumbItemsAsync()
+        {
+            BreadcrumbItems.Add(new Volo.Abp.BlazoriseUI.BreadcrumbItem(L["Menu:DataDictionaries"],"/data-dictionaries"));
+            BreadcrumbItems.Add(new Volo.Abp.BlazoriseUI.BreadcrumbItem(L["Menu:DataDictionariessDetail"]));
+            return ValueTask.CompletedTask;
         }
         private async Task SetPermissionsAsync()
         {

@@ -8,7 +8,12 @@
 @inherits DataDictionaryComponentBase
 @inject IDataDictionariesAppService DataDictionariesAppService
 @inject IDataDictionaryItemsAppService DataDictionaryItemsAppService
+@using Volo.Abp.AspNetCore.Components.Web.Theming.Layout
 
+@* ************************* PAGE HEADER ************************* *@
+<PageHeader Title="@L["Menu:DataDictionariessDetail"]" BreadcrumbItems="BreadcrumbItems" Toolbar="Toolbar">
+
+</PageHeader>
 
 <Card>
     <CardBody>
@@ -54,6 +59,22 @@
             </Paragraph>
         }
 
+        <Form id="DataDictionarySearchForm" class="mb-3" Style="font-size: small;margin-right: 20px">
+            <Addons>
+                <Addon AddonType="AddonType.Body">
+                    <TextEdit @bind-Text="@Filter.FilterText"
+                              Autofocus="true"
+                              Placeholder="@L["Search"]">
+                    </TextEdit>
+                </Addon>
+                <Addon AddonType="AddonType.End">
+                    <SubmitButton  Form="DataDictionarySearchForm" Clicked="GetModelDetailAsync">
+                        <Icon Name="IconName.Search" Class="me-1"></Icon>@L["Search"]
+                    </SubmitButton>
+                </Addon>
+            </Addons>
+        </Form>
+        
         <DataGrid TItem="DataDictionaryItemWithNavigationPropertiesDto"
                   Data="DataDictionaryItemList"
                   ReadData="OnDataGridReadAsync"
