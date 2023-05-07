@@ -15,7 +15,6 @@ namespace JS.Abp.DataDictionary.DataDictionaries
         }
         public string Code { get; set; }
         public string DisplayText { get; set; }
-        [ColumnText("DataDictionaryType")]
         public string Description { get; set; }
         public bool IsStatic { get; set; }
 

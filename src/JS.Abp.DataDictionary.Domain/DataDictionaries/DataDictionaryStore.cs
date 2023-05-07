@@ -43,7 +43,17 @@ public class DataDictionaryStore:IDataDictionaryStore, ITransientDependency
     private async Task<DataDictionary> GetDictFromDatabaseAsync(string code)
     {
         var queryable = await _dataDictionaryRepository.WithDetailsAsync(x => x.Items);
-        var query = queryable.Where(x => x.Code == code);
-        return query.FirstOrDefault();
+        var items = queryable.Where(x => x.Code == code).ToList();
+        if (items.Count>0)
+        {
+            return items.FirstOrDefault();
+        }
+        else
+        { 
+            return new DataDictionary()
+            {
+               
+            }; 
+        }
     }
 }

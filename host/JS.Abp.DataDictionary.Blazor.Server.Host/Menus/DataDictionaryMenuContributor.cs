@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using JS.Abp.DataDictionary.Localization;
 using JS.Abp.DataDictionary.MultiTenancy;
 using Volo.Abp.Identity.Blazor;
 using Volo.Abp.SettingManagement.Blazor.Menus;
@@ -15,6 +17,7 @@ public class DataDictionaryMenuContributor : IMenuContributor
         {
             await ConfigureMainMenuAsync(context);
         }
+        var moduleMenu = AddModuleMenuItem(context);
     }
 
     private Task ConfigureMainMenuAsync(MenuConfigurationContext context)
@@ -35,4 +38,18 @@ public class DataDictionaryMenuContributor : IMenuContributor
 
         return Task.CompletedTask;
     }
+    private static ApplicationMenuItem AddModuleMenuItem(MenuConfigurationContext context)
+    {
+        var moduleMenu = new ApplicationMenuItem(
+            Menus.DataDictionaryMenus.Demos,
+                context.GetLocalizer<DataDictionaryResource>()["Menu:Demos"],
+                "/Demos",
+                icon: "fa fa-file-alt"
+        );
+
+        context.Menu.Items.AddIfNotContains(moduleMenu);
+        return moduleMenu;
+    }
+
+   
 }

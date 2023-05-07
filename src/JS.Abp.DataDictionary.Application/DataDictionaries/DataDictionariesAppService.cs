@@ -27,7 +27,7 @@ namespace JS.Abp.DataDictionary.DataDictionaries
         private readonly IDistributedCache<DataDictionaryExcelDownloadTokenCacheItem, string> _excelDownloadTokenCache;
         private readonly IDataDictionaryRepository _dataDictionaryRepository;
         private readonly IDataDictionaryManager _dataDictionaryManager;
-        protected DataDictionaryPropertyManager dataDictionaryProperty => LazyServiceProvider.LazyGetRequiredService<DataDictionaryPropertyManager>();
+        
         protected DataDictionaryStore dataDictionaryStore => LazyServiceProvider.LazyGetRequiredService<DataDictionaryStore>();
         
         public DataDictionariesAppService(IDataDictionaryRepository dataDictionaryRepository, IDataDictionaryManager dataDictionaryManager, IDistributedCache<DataDictionaryExcelDownloadTokenCacheItem, string> excelDownloadTokenCache)
@@ -53,7 +53,7 @@ namespace JS.Abp.DataDictionary.DataDictionaries
         public virtual async Task<DataDictionaryDto> GetAsync(Guid id)
         {
             var item =  ObjectMapper.Map<DataDictionary, DataDictionaryDto>(await _dataDictionaryRepository.GetAsync(id));
-            return item;//await dataDictionaryProperty.GetAsync(item);
+            return item;
         }
 
         [Authorize(DataDictionaryPermissions.DataDictionaries.Delete)]

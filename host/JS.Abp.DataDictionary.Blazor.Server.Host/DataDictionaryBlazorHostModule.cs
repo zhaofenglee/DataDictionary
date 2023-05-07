@@ -51,6 +51,9 @@ using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
+using JS.Abp.DataDictionary.Blazor.Server.Host.EntityFrameworkCore;
+using JS.Abp.DataDictionary.Blazor.Server.Host.Demos;
+using Volo.Abp.AutoMapper;
 
 namespace JS.Abp.DataDictionary.Blazor.Server.Host;
 
@@ -116,9 +119,27 @@ public class DataDictionaryBlazorHostModule : AbpModule
 
         context.Services.ForwardIdentityAuthenticationForBearer(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
 
+        context.Services.AddAbpDbContext<UnifiedDbContext>(options =>
+        {
+            /* Add custom repositories here. Example:
+             * options.AddRepository<Question, EfCoreQuestionRepository>();
+             */
+
+            options.AddRepository<Demo, EfCoreDemoRepository>();
+
+        });
+
+        
+        context.Services.AddAutoMapperObjectMapper<DataDictionaryBlazorHostModule>();
+        Configure<AbpAutoMapperOptions>(options =>
+        {
+            options.AddMaps<DataDictionaryHostAutoMapperProfile>(validate: true);
+        });
+
         Configure<AbpDbContextOptions>(options =>
         {
             options.UseSqlServer();
+            
         });
 
         Configure<AbpBundlingOptions>(options =>

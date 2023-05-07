@@ -58,6 +58,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Include="Pages\Demos.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
         <None Update="Pages\**\*.js">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
