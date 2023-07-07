@@ -36,6 +36,7 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
                     string displayText = null,
                     string description = null,
                     bool? isStatic = null,
+                    Guid? dataDictionaryId = null,
                     string sorting = null,
                     int maxResultCount = int.MaxValue,
                     int skipCount = 0,

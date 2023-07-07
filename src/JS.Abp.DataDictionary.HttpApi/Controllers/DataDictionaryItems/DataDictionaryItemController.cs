@@ -65,6 +65,13 @@ namespace JS.Abp.DataDictionary.Controllers.DataDictionaryItems
             return _dataDictionaryItemsAppService.GetListAsync(input);
         }
         [HttpGet]
+        [Route("with-items")]
+        public Task<PagedResultDto<DataDictionaryItemDto>> GetListWithItemAsync(GetDataDictionaryItemsWithCodeInput input)
+        {
+            return _dataDictionaryItemsAppService.GetListWithItemAsync(input);
+        }
+
+        [HttpGet]
         [Route("with-navigation-properties/{id}")]
         public Task<DataDictionaryItemWithNavigationPropertiesDto> GetWithNavigationPropertiesAsync(Guid id)
         {

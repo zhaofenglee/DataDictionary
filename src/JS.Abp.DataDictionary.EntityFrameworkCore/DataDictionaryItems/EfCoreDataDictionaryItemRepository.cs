@@ -94,12 +94,13 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
             string displayText = null,
             string description = null,
             bool? isStatic = null,
+            Guid? dataDictionaryId = null,
             string sorting = null,
             int maxResultCount = int.MaxValue,
             int skipCount = 0,
             CancellationToken cancellationToken = default)
         {
-            var query = ApplyFilter((await GetQueryableAsync()), filterText,sequenceMin, sequenceMax, code, displayText, description, isStatic);
+            var query = ApplyFilter((await GetQueryableAsync()), filterText,sequenceMin, sequenceMax, code, displayText, description, isStatic,dataDictionaryId);
             query = query.OrderBy(string.IsNullOrWhiteSpace(sorting) ? DataDictionaryItemConsts.GetDefaultSorting(false) : sorting);
             return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancellationToken);
         }
@@ -128,7 +129,8 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
             string code = null,
             string displayText = null,
             string description = null,
-            bool? isStatic = null)
+            bool? isStatic = null,
+            Guid? dataDictionaryId = null)
         {
             return query
                     .WhereIf(!string.IsNullOrWhiteSpace(filterText), e => e.Code.Contains(filterText) || e.DisplayText.Contains(filterText) || e.Description.Contains(filterText))
@@ -137,7 +139,8 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
                     .WhereIf(!string.IsNullOrWhiteSpace(code), e => e.Code.Contains(code))
                     .WhereIf(!string.IsNullOrWhiteSpace(displayText), e => e.DisplayText.Contains(displayText))
                     .WhereIf(!string.IsNullOrWhiteSpace(description), e => e.Description.Contains(description))
-                    .WhereIf(isStatic.HasValue, e => e.IsStatic == isStatic);
+                    .WhereIf(isStatic.HasValue, e => e.IsStatic == isStatic)
+                    .WhereIf(dataDictionaryId != null && dataDictionaryId != Guid.Empty, e => e.DataDictionaryId == dataDictionaryId);
         }
     }
 }

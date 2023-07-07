@@ -11,7 +11,7 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
     public interface IDataDictionaryItemsAppService : IApplicationService
     {
         Task<PagedResultDto<DataDictionaryItemWithNavigationPropertiesDto>> GetListAsync(GetDataDictionaryItemsInput input);
-
+        Task<PagedResultDto<DataDictionaryItemDto>> GetListWithItemAsync(GetDataDictionaryItemsWithCodeInput input);
         Task<DataDictionaryItemWithNavigationPropertiesDto> GetWithNavigationPropertiesAsync(Guid id);
 
         Task<DataDictionaryItemDto> GetAsync(Guid id);

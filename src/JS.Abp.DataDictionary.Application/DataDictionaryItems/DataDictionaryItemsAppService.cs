@@ -21,8 +21,8 @@ using JS.Abp.DataDictionary.DataDictionaries;
 
 namespace JS.Abp.DataDictionary.DataDictionaryItems
 {
-    [RemoteService(IsEnabled = false)]
-    // [Authorize(DataDictionaryPermissions.DataDictionaryItems.Default)]
+   
+    [Authorize(DataDictionaryPermissions.DataDictionaries.Default)]
     public class DataDictionaryItemsAppService : ApplicationService, IDataDictionaryItemsAppService
     {
         private readonly IDistributedCache<DataDictionaryItemExcelDownloadTokenCacheItem, string> _excelDownloadTokenCache;
@@ -48,6 +48,19 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
             {
                 TotalCount = totalCount,
                 Items = ObjectMapper.Map<List<DataDictionaryItemWithNavigationProperties>, List<DataDictionaryItemWithNavigationPropertiesDto>>(items)
+            };
+        }
+
+        public virtual async Task<PagedResultDto<DataDictionaryItemDto>> GetListWithItemAsync(GetDataDictionaryItemsWithCodeInput input)
+        {
+            var dataDictionary = await _dataDictionaryRepository.GetAsync(c=>c.Code==input.DataDictionaryCode);
+            var totalCount = await _dataDictionaryItemRepository.GetCountAsync(input.FilterText,null,null, input.Code, input.DisplayText, input.Description, input.IsStatic, dataDictionary.Id);
+            var items = await _dataDictionaryItemRepository.GetListAsync(input.FilterText,null,null, input.Code, input.DisplayText, input.Description, input.IsStatic, dataDictionary.Id, input.Sorting, input.MaxResultCount, input.SkipCount);
+
+            return new PagedResultDto<DataDictionaryItemDto>
+            {
+                TotalCount = totalCount,
+                Items = ObjectMapper.Map<List<DataDictionaryItem>, List<DataDictionaryItemDto>>(items)
             };
         }
 
