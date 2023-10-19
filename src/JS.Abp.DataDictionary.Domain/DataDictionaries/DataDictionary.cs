@@ -1,11 +1,13 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.MultiTenancy;
 using JetBrains.Annotations;
-
-using Volo.Abp;
 using JS.Abp.DataDictionary.DataDictionaryItems;
+using Volo.Abp;
 
 namespace JS.Abp.DataDictionary.DataDictionaries
 {
@@ -18,18 +20,18 @@ namespace JS.Abp.DataDictionary.DataDictionaries
         public virtual string DisplayText { get; set; }
 
         [CanBeNull]
-        public virtual string Description { get; set; }
+        public virtual string? Description { get; set; }
 
-        public virtual bool IsStatic { get; set; }
+        public virtual bool IsActive { get; set; }
+        
+        public virtual List<DataDictionaryItem> Items { get; protected set; }
 
-        public virtual ICollection<DataDictionaryItem> Items { get; protected set; }
-
-        public DataDictionary()
+        protected DataDictionary()
         {
-            Items = new Collection<DataDictionaryItem>();
+            Items = new List<DataDictionaryItem>();
         }
 
-        public DataDictionary(Guid id, string code, string displayText, string description, bool isStatic)
+        public DataDictionary(Guid id, string code, string displayText, bool isActive, string? description = null)
         {
 
             Id = id;
@@ -40,12 +42,10 @@ namespace JS.Abp.DataDictionary.DataDictionaries
             Check.Length(description, nameof(description), DataDictionaryConsts.DescriptionMaxLength, 0);
             Code = code;
             DisplayText = displayText;
+            IsActive = isActive;
             Description = description;
-            IsStatic = isStatic;
-
-            Items = new Collection<DataDictionaryItem>();
+            Items = new List<DataDictionaryItem>();
         }
 
-       
     }
 }

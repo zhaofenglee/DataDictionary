@@ -38,7 +38,7 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
             string code = null,
             string displayText = null,
             string description = null,
-            bool? isStatic = null,
+            bool? isActive = null,
             Guid? dataDictionaryId = null,
             string sorting = null,
             int maxResultCount = int.MaxValue,
@@ -46,10 +46,12 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
             CancellationToken cancellationToken = default)
         {
             var query = await GetQueryForNavigationPropertiesAsync();
-            query = ApplyFilter(query, filterText,sequenceMin, sequenceMax, code, displayText, description, isStatic, dataDictionaryId);
+            query = ApplyFilter(query, filterText,sequenceMin, sequenceMax, code, displayText, description, isActive, dataDictionaryId);
             query = query.OrderBy(string.IsNullOrWhiteSpace(sorting) ? DataDictionaryItemConsts.GetDefaultSorting(true) : sorting);
             return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancellationToken);
         }
+
+       
 
         protected virtual async Task<IQueryable<DataDictionaryItemWithNavigationProperties>> GetQueryForNavigationPropertiesAsync()
         {
@@ -72,7 +74,7 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
             string code = null,
             string displayText = null,
             string description = null,
-            bool? isStatic = null,
+            bool? isActive = null,
             Guid? dataDictionaryId = null)
         {
             return query
@@ -82,10 +84,11 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
                 .WhereIf(!string.IsNullOrWhiteSpace(code), e => e.DataDictionaryItem.Code.Contains(code))
                     .WhereIf(!string.IsNullOrWhiteSpace(displayText), e => e.DataDictionaryItem.DisplayText.Contains(displayText))
                     .WhereIf(!string.IsNullOrWhiteSpace(description), e => e.DataDictionaryItem.Description.Contains(description))
-                    .WhereIf(isStatic.HasValue, e => e.DataDictionaryItem.IsStatic == isStatic)
+                    .WhereIf(isActive.HasValue, e => e.DataDictionaryItem.IsActive == isActive)
                     .WhereIf(dataDictionaryId != null && dataDictionaryId != Guid.Empty, e => e.DataDictionary != null && e.DataDictionary.Id == dataDictionaryId);
         }
-
+        
+        
         public async Task<List<DataDictionaryItem>> GetListAsync(
             string filterText = null,
             int? sequenceMin = null,
@@ -93,14 +96,13 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
             string code = null,
             string displayText = null,
             string description = null,
-            bool? isStatic = null,
-            Guid? dataDictionaryId = null,
+            bool? isActive = null,
             string sorting = null,
             int maxResultCount = int.MaxValue,
             int skipCount = 0,
             CancellationToken cancellationToken = default)
         {
-            var query = ApplyFilter((await GetQueryableAsync()), filterText,sequenceMin, sequenceMax, code, displayText, description, isStatic,dataDictionaryId);
+            var query = ApplyFilter((await GetQueryableAsync()), filterText,sequenceMin, sequenceMax, code, displayText, description, isActive);
             query = query.OrderBy(string.IsNullOrWhiteSpace(sorting) ? DataDictionaryItemConsts.GetDefaultSorting(false) : sorting);
             return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancellationToken);
         }
@@ -112,12 +114,12 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
             string code = null,
             string displayText = null,
             string description = null,
-            bool? isStatic = null,
+            bool? isActive = null,
             Guid? dataDictionaryId = null,
             CancellationToken cancellationToken = default)
         {
             var query = await GetQueryForNavigationPropertiesAsync();
-            query = ApplyFilter(query, filterText, sequenceMin, sequenceMax,code, displayText, description, isStatic, dataDictionaryId);
+            query = ApplyFilter(query, filterText, sequenceMin, sequenceMax,code, displayText, description, isActive, dataDictionaryId);
             return await query.LongCountAsync(GetCancellationToken(cancellationToken));
         }
 
@@ -129,7 +131,7 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
             string code = null,
             string displayText = null,
             string description = null,
-            bool? isStatic = null,
+            bool? isActive = null,
             Guid? dataDictionaryId = null)
         {
             return query
@@ -139,7 +141,7 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
                     .WhereIf(!string.IsNullOrWhiteSpace(code), e => e.Code.Contains(code))
                     .WhereIf(!string.IsNullOrWhiteSpace(displayText), e => e.DisplayText.Contains(displayText))
                     .WhereIf(!string.IsNullOrWhiteSpace(description), e => e.Description.Contains(description))
-                    .WhereIf(isStatic.HasValue, e => e.IsStatic == isStatic)
+                    .WhereIf(isActive.HasValue, e => e.IsActive == isActive)
                     .WhereIf(dataDictionaryId != null && dataDictionaryId != Guid.Empty, e => e.DataDictionaryId == dataDictionaryId);
         }
     }

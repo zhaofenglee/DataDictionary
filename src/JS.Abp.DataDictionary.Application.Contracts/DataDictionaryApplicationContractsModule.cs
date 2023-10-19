@@ -7,7 +7,7 @@ namespace JS.Abp.DataDictionary;
 [DependsOn(
     typeof(DataDictionaryDomainSharedModule),
     typeof(AbpDddApplicationContractsModule),
-    typeof(AbpAuthorizationModule)
+    typeof(AbpAuthorizationAbstractionsModule)
     )]
 public class DataDictionaryApplicationContractsModule : AbpModule
 {

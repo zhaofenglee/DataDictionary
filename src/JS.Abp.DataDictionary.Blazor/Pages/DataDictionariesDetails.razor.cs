@@ -79,7 +79,7 @@ namespace JS.Abp.DataDictionary.Blazor.Pages
             {
                 Sequence = 1,
                 DataDictionaryId = DetailId,
-                IsStatic = true,
+                IsActive = true,
             };
             await NewDataDictionaryItemValidations.ClearAll();
             await CreateDataDictionaryItemModal.Show();

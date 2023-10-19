@@ -41,8 +41,8 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
 
         public virtual async Task<PagedResultDto<DataDictionaryItemWithNavigationPropertiesDto>> GetListAsync(GetDataDictionaryItemsInput input)
         {
-            var totalCount = await _dataDictionaryItemRepository.GetCountAsync(input.FilterText,input.SequenceMin,input.SequenceMax, input.Code, input.DisplayText, input.Description, input.IsStatic, input.DataDictionaryId);
-            var items = await _dataDictionaryItemRepository.GetListWithNavigationPropertiesAsync(input.FilterText,input.SequenceMin,input.SequenceMax, input.Code, input.DisplayText, input.Description, input.IsStatic, input.DataDictionaryId, input.Sorting, input.MaxResultCount, input.SkipCount);
+            var totalCount = await _dataDictionaryItemRepository.GetCountAsync(input.FilterText,input.SequenceMin,input.SequenceMax, input.Code, input.DisplayText, input.Description, input.IsActive, input.DataDictionaryId);
+            var items = await _dataDictionaryItemRepository.GetListWithNavigationPropertiesAsync(input.FilterText,input.SequenceMin,input.SequenceMax, input.Code, input.DisplayText, input.Description, input.IsActive, input.DataDictionaryId, input.Sorting, input.MaxResultCount, input.SkipCount);
 
             return new PagedResultDto<DataDictionaryItemWithNavigationPropertiesDto>
             {
@@ -53,15 +53,23 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
 
         public virtual async Task<PagedResultDto<DataDictionaryItemDto>> GetListWithItemAsync(GetDataDictionaryItemsWithCodeInput input)
         {
-            var dataDictionary = await _dataDictionaryRepository.GetAsync(c=>c.Code==input.DataDictionaryCode);
-            var totalCount = await _dataDictionaryItemRepository.GetCountAsync(input.FilterText,null,null, input.Code, input.DisplayText, input.Description, input.IsStatic, dataDictionary.Id);
-            var items = await _dataDictionaryItemRepository.GetListAsync(input.FilterText,null,null, input.Code, input.DisplayText, input.Description, input.IsStatic, dataDictionary.Id, input.Sorting, input.MaxResultCount, input.SkipCount);
-
-            return new PagedResultDto<DataDictionaryItemDto>
+            var dataDictionary = await _dataDictionaryRepository.FindAsync(c=>c.Code==input.DataDictionaryCode);
+            if (dataDictionary!=null)
             {
-                TotalCount = totalCount,
-                Items = ObjectMapper.Map<List<DataDictionaryItem>, List<DataDictionaryItemDto>>(items)
-            };
+                var totalCount = await _dataDictionaryItemRepository.GetCountAsync(input.FilterText,null,null, input.Code, input.DisplayText, input.Description, input.IsStatic, dataDictionary.Id);
+                var items = await _dataDictionaryItemRepository.GetListWithNavigationPropertiesAsync(input.FilterText,null,null, input.Code, input.DisplayText, input.Description, input.IsStatic, dataDictionary.Id, input.Sorting, input.MaxResultCount, input.SkipCount);
+
+                return new PagedResultDto<DataDictionaryItemDto>
+                {
+                    TotalCount = totalCount,
+                    Items = ObjectMapper.Map<List<DataDictionaryItemWithNavigationProperties>, List<DataDictionaryItemDto>>(items)
+                };
+            }
+            else
+            {
+                return new PagedResultDto<DataDictionaryItemDto>();  
+            }
+           
         }
 
         public virtual async Task<DataDictionaryItemWithNavigationPropertiesDto> GetWithNavigationPropertiesAsync(Guid id)
@@ -102,7 +110,7 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
         {
 
             var dataDictionaryItem = await _dataDictionaryItemManager.CreateAsync(
-            input.DataDictionaryId, input.Code, input.DisplayText, input.Description, input.IsStatic, input.Sequence
+            input.DataDictionaryId,input.Sequence.Value,input.IsActive,  input.Code, input.DisplayText, input.Description
             );
 
             return ObjectMapper.Map<DataDictionaryItem, DataDictionaryItemDto>(dataDictionaryItem);
@@ -114,7 +122,7 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
 
             var dataDictionaryItem = await _dataDictionaryItemManager.UpdateAsync(
             id,
-            input.DataDictionaryId, input.Code, input.DisplayText, input.Description, input.IsStatic,input.Sequence, input.ConcurrencyStamp
+            input.DataDictionaryId,input.Sequence.Value,input.IsActive,  input.Code, input.DisplayText, input.Description, input.ConcurrencyStamp
             );
 
             return ObjectMapper.Map<DataDictionaryItem, DataDictionaryItemDto>(dataDictionaryItem);
@@ -129,7 +137,7 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
                 throw new AbpAuthorizationException("Invalid download token: " + input.DownloadToken);
             }
 
-            var items = await _dataDictionaryItemRepository.GetListAsync(input.FilterText, input.SequenceMin,input.SequenceMax, input.Code, input.DisplayText, input.Description, input.IsStatic);
+            var items = await _dataDictionaryItemRepository.GetListAsync(input.FilterText, input.SequenceMin,input.SequenceMax, input.Code, input.DisplayText, input.Description, input.IsActive);
 
             var memoryStream = new MemoryStream();
             await memoryStream.SaveAsAsync(ObjectMapper.Map<List<DataDictionaryItem>, List<DataDictionaryItemExcelDto>>(items));

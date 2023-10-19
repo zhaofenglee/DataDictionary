@@ -19,7 +19,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("_Abp_DatabaseProvider", EfCoreDatabaseProvider.SqlServer)
-                .HasAnnotation("ProductVersion", "7.0.1")
+                .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -31,6 +31,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -57,6 +58,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
                         .HasColumnName("DisplayName");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -98,6 +100,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -130,18 +133,19 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
                         .HasColumnName("DisplayText");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsActive");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false)
                         .HasColumnName("IsDeleted");
-
-                    b.Property<bool>("IsStatic")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsStatic");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2")
@@ -163,13 +167,13 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("Code");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -183,7 +187,9 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<Guid?>("DataDictionaryId")
-                        .IsRequired()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("DataDictionaryId1")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("DeleterId")
@@ -200,24 +206,24 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
                         .HasColumnName("Description");
 
                     b.Property<string>("DisplayText")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("DisplayText");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsActive");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false)
                         .HasColumnName("IsDeleted");
-
-                    b.Property<bool>("IsStatic")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsStatic");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2")
@@ -227,14 +233,15 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("LastModifierId");
 
-                    b.Property<int?>("Sequence")
-                        .IsRequired()
+                    b.Property<int>("Sequence")
                         .HasColumnType("int")
                         .HasColumnName("Sequence");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DataDictionaryId");
+
+                    b.HasIndex("DataDictionaryId1");
 
                     b.ToTable("AbpDataDictionaryItems", (string)null);
                 });
@@ -277,6 +284,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -297,6 +305,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -631,6 +640,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -640,6 +650,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -705,6 +716,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -713,6 +725,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -805,6 +818,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -817,6 +831,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -866,6 +881,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -902,6 +918,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -1186,6 +1203,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -1216,6 +1234,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -1424,6 +1443,55 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
                     b.ToTable("AbpSettings", (string)null);
                 });
 
+            modelBuilder.Entity("Volo.Abp.SettingManagement.SettingDefinitionRecord", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DefaultValue")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ExtraProperties");
+
+                    b.Property<bool>("IsEncrypted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsInherited")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsVisibleToClients")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Providers")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("AbpSettingDefinitions", (string)null);
+                });
+
             modelBuilder.Entity("Volo.Abp.TenantManagement.Tenant", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1432,6 +1500,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
@@ -1456,6 +1525,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ExtraProperties")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
@@ -1506,13 +1576,14 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Migrations
 
             modelBuilder.Entity("JS.Abp.DataDictionary.DataDictionaryItems.DataDictionaryItem", b =>
                 {
-                    b.HasOne("JS.Abp.DataDictionary.DataDictionaries.DataDictionary", "DataDictionary")
-                        .WithMany("Items")
+                    b.HasOne("JS.Abp.DataDictionary.DataDictionaries.DataDictionary", null)
+                        .WithMany()
                         .HasForeignKey("DataDictionaryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
-                    b.Navigation("DataDictionary");
+                    b.HasOne("JS.Abp.DataDictionary.DataDictionaries.DataDictionary", null)
+                        .WithMany("Items")
+                        .HasForeignKey("DataDictionaryId1");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>

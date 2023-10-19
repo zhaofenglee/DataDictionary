@@ -3,12 +3,13 @@
   <Import Project="..\..\common.props" />
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net7.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
     <RootNamespace>JS.Abp.DataDictionary</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.MongoDB" Version="$(VoloAbpPackageVersion)" />
+    <PackageReference Include="Volo.Abp.MongoDB" Version="7.4.0" />
     <ProjectReference Include="..\JS.Abp.DataDictionary.Domain\JS.Abp.DataDictionary.Domain.csproj" />
   </ItemGroup>
 

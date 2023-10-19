@@ -97,10 +97,10 @@
               </DataGridColumn>
 
               <DataGridColumn TItem="DataDictionaryDto"
-                      Field="IsStatic"
-                      Caption="@L["IsStatic"]">
+                      Field="IsActive"
+                      Caption="@L["IsActive"]">
                     <DisplayTemplate>
-                        @if (context.IsStatic)
+                        @if (context.IsActive)
                         {
                             <Icon TextColor="TextColor.Success" Name="@IconName.Check" />
                         }
@@ -169,7 +169,7 @@
 
 
                     <Field>
-                        <Check TValue="bool" @bind-Checked="@NewDataDictionary.IsStatic">@L["IsStatic"]</Check>
+                        <Check TValue="bool" @bind-Checked="@NewDataDictionary.IsActive">@L["IsActive"]</Check>
                     </Field>
 
                     
@@ -239,7 +239,7 @@
 
 
                     <Field>
-                        <Check TValue="bool" @bind-Checked="@EditingDataDictionary.IsStatic">@L["IsStatic"]</Check>
+                        <Check TValue="bool" @bind-Checked="@EditingDataDictionary.IsActive">@L["IsActive"]</Check>
                     </Field>
 
                     

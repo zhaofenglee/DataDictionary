@@ -15,7 +15,7 @@ namespace JS.Abp.DataDictionary.DataDictionaries
         public string DisplayText { get; set; }
         [StringLength(DataDictionaryConsts.DescriptionMaxLength)]
         public string Description { get; set; }
-        public bool IsStatic { get; set; }
+        public bool IsActive { get; set; }
 
         public string ConcurrencyStamp { get; set; }
     }

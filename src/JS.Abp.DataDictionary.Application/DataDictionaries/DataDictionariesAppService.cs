@@ -26,11 +26,11 @@ namespace JS.Abp.DataDictionary.DataDictionaries
     {
         private readonly IDistributedCache<DataDictionaryExcelDownloadTokenCacheItem, string> _excelDownloadTokenCache;
         private readonly IDataDictionaryRepository _dataDictionaryRepository;
-        private readonly IDataDictionaryManager _dataDictionaryManager;
+        private readonly DataDictionaryManager _dataDictionaryManager;
         
         protected DataDictionaryStore dataDictionaryStore => LazyServiceProvider.LazyGetRequiredService<DataDictionaryStore>();
         
-        public DataDictionariesAppService(IDataDictionaryRepository dataDictionaryRepository, IDataDictionaryManager dataDictionaryManager, IDistributedCache<DataDictionaryExcelDownloadTokenCacheItem, string> excelDownloadTokenCache)
+        public DataDictionariesAppService(IDataDictionaryRepository dataDictionaryRepository, DataDictionaryManager dataDictionaryManager, IDistributedCache<DataDictionaryExcelDownloadTokenCacheItem, string> excelDownloadTokenCache)
         {
             _excelDownloadTokenCache = excelDownloadTokenCache;
             _dataDictionaryRepository = dataDictionaryRepository;
@@ -39,8 +39,8 @@ namespace JS.Abp.DataDictionary.DataDictionaries
 
         public virtual async Task<PagedResultDto<DataDictionaryDto>> GetListAsync(GetDataDictionariesInput input)
         {
-            var totalCount = await _dataDictionaryRepository.GetCountAsync(input.FilterText, input.Code, input.DisplayText, input.Description, input.IsStatic);
-            var items = await _dataDictionaryRepository.GetListAsync(input.FilterText, input.Code, input.DisplayText, input.Description, input.IsStatic, input.Sorting, input.MaxResultCount, input.SkipCount);
+            var totalCount = await _dataDictionaryRepository.GetCountAsync(input.FilterText, input.Code, input.DisplayText, input.Description, input.IsActive);
+            var items = await _dataDictionaryRepository.GetListAsync(input.FilterText, input.Code, input.DisplayText, input.Description, input.IsActive, input.Sorting, input.MaxResultCount, input.SkipCount);
 
             
             return new PagedResultDto<DataDictionaryDto>
@@ -67,7 +67,7 @@ namespace JS.Abp.DataDictionary.DataDictionaries
         {
 
             var dataDictionary = await _dataDictionaryManager.CreateAsync(
-            input.Code, input.DisplayText, input.Description, input.IsStatic
+            input.Code, input.DisplayText,  input.IsActive,input.Description
             );
 
             return ObjectMapper.Map<DataDictionary, DataDictionaryDto>(dataDictionary);
@@ -79,7 +79,7 @@ namespace JS.Abp.DataDictionary.DataDictionaries
 
             var dataDictionary = await _dataDictionaryManager.UpdateAsync(
             id,
-            input.Code, input.DisplayText, input.Description, input.IsStatic, input.ConcurrencyStamp
+            input.DisplayText,input.IsActive, input.Description,  input.ConcurrencyStamp
             );
 
             return ObjectMapper.Map<DataDictionary, DataDictionaryDto>(dataDictionary);
@@ -94,7 +94,7 @@ namespace JS.Abp.DataDictionary.DataDictionaries
                 throw new AbpAuthorizationException("Invalid download token: " + input.DownloadToken);
             }
 
-            var items = await _dataDictionaryRepository.GetListAsync(input.FilterText, input.Code, input.DisplayText, input.Description, input.IsStatic);
+            var items = await _dataDictionaryRepository.GetListAsync(input.FilterText, input.Code, input.DisplayText, input.Description, input.IsActive);
 
             var memoryStream = new MemoryStream();
             await memoryStream.SaveAsAsync(ObjectMapper.Map<List<DataDictionary>, List<DataDictionaryExcelDto>>(items));

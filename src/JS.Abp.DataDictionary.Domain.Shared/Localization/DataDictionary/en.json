@@ -29,6 +29,7 @@
     "NewDataDictionaryItem": "New Data Dictionary Item",
     "Menu:DataDictionaryItems": "Data Dictionary Items",
     "DataDictionary": "Data dictionary",
-    "Menu:DataDictionariessDetail": "DataDictionariess Detail"
+    "Menu:DataDictionariessDetail": "DataDictionariess Detail",
+    "IsActive": "Is Active"
   }
 }

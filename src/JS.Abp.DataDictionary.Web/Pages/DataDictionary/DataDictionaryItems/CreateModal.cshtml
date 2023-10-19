@@ -1,0 +1,46 @@
+@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@using JS.Abp.DataDictionary.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@using JS.Abp.DataDictionary.Web.Pages.DataDictionary.DataDictionaryItems
+@using JS.Abp.DataDictionary.DataDictionaryItems;
+@using System.Globalization
+@inject IHtmlLocalizer<DataDictionaryResource> L
+@model CreateModalModel
+@{
+    Layout = null;
+}
+
+
+<form data-ajaxForm="true" asp-page="/DataDictionary/DataDictionaryItems/CreateModal" autocomplete="off">
+    <abp-modal id="DataDictionaryItemCreateModal">
+        <abp-modal-header title="@L["NewDataDictionaryItem"].Value"></abp-modal-header>
+
+        <abp-modal-body>
+
+            @* <abp-select asp-for="DataDictionaryItem.DataDictionaryId" asp-items="Model.DataDictionaryLookupList" label="@L["DataDictionary"].Value"/> *@
+
+
+            <abp-input asp-for="DataDictionaryItem.Sequence"/>
+
+
+            <abp-input asp-for="DataDictionaryItem.Code"/>
+
+
+            <abp-input asp-for="DataDictionaryItem.DisplayText"/>
+
+
+            <abp-input asp-for="DataDictionaryItem.Description" text-area/>
+
+
+            <abp-input asp-for="DataDictionaryItem.IsActive"/>
+            <abp-input type="hidden" value="@Model.DataDictionaryId" asp-for="DataDictionaryItem.DataDictionaryId"/>
+
+
+        </abp-modal-body>
+
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel | AbpModalButtons.Save)">
+
+        </abp-modal-footer>
+    </abp-modal>
+</form>

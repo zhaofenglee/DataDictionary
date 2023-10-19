@@ -1,6 +1,7 @@
 ﻿using Volo.Abp.Modularity;
 using Volo.Abp.Localization;
 using JS.Abp.DataDictionary.Localization;
+using Volo.Abp.Domain;
 using Volo.Abp.Localization.ExceptionHandling;
 using Volo.Abp.Validation;
 using Volo.Abp.Validation.Localization;
@@ -9,7 +10,8 @@ using Volo.Abp.VirtualFileSystem;
 namespace JS.Abp.DataDictionary;
 
 [DependsOn(
-    typeof(AbpValidationModule)
+    typeof(AbpValidationModule),
+    typeof(AbpDddDomainSharedModule)
 )]
 public class DataDictionaryDomainSharedModule : AbpModule
 {

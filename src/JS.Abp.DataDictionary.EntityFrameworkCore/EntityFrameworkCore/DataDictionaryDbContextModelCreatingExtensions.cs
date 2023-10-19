@@ -12,36 +12,37 @@ public static class DataDictionaryDbContextModelCreatingExtensions
         this ModelBuilder builder)
     {
         Check.NotNull(builder, nameof(builder));
-        if (builder.IsHostDatabase())
-        {
-            builder.Entity<JS.Abp.DataDictionary.DataDictionaries.DataDictionary>(b =>
-            {
-                b.ToTable(DataDictionaryDbProperties.DbTablePrefix + "DataDictionaries", DataDictionaryDbProperties.DbSchema);
-                b.ConfigureByConvention();
-                b.Property(x => x.Code).HasColumnName(nameof(JS.Abp.DataDictionary.DataDictionaries.DataDictionary.Code)).IsRequired().HasMaxLength(JS.Abp.DataDictionary.DataDictionaries.DataDictionaryConsts.CodeMaxLength);
-                b.Property(x => x.DisplayText).HasColumnName(nameof(JS.Abp.DataDictionary.DataDictionaries.DataDictionary.DisplayText)).IsRequired().HasMaxLength(JS.Abp.DataDictionary.DataDictionaries.DataDictionaryConsts.DisplayTextMaxLength);
-                b.Property(x => x.Description).HasColumnName(nameof(JS.Abp.DataDictionary.DataDictionaries.DataDictionary.Description)).HasMaxLength(JS.Abp.DataDictionary.DataDictionaries.DataDictionaryConsts.DescriptionMaxLength);
-                b.Property(x => x.IsStatic).HasColumnName(nameof(JS.Abp.DataDictionary.DataDictionaries.DataDictionary.IsStatic));
-                b.HasMany(x => x.Items).WithOne(x => x.DataDictionary).HasForeignKey(x => x.DataDictionaryId).IsRequired();
-                //b.HasIndex(x => x.Code);
-            });
+         if (builder.IsHostDatabase())
+         {
+             builder.Entity<JS.Abp.DataDictionary.DataDictionaries.DataDictionary>(b =>
+             {
+                 b.ToTable(DataDictionaryDbProperties.DbTablePrefix + "DataDictionaries", DataDictionaryDbProperties.DbSchema);
+                 b.ConfigureByConvention();
+                 b.Property(x => x.Code).HasColumnName(nameof(JS.Abp.DataDictionary.DataDictionaries.DataDictionary.Code)).IsRequired().HasMaxLength(JS.Abp.DataDictionary.DataDictionaries.DataDictionaryConsts.CodeMaxLength);
+                 b.Property(x => x.DisplayText).HasColumnName(nameof(JS.Abp.DataDictionary.DataDictionaries.DataDictionary.DisplayText)).IsRequired().HasMaxLength(JS.Abp.DataDictionary.DataDictionaries.DataDictionaryConsts.DisplayTextMaxLength);
+                 b.Property(x => x.Description).HasColumnName(nameof(JS.Abp.DataDictionary.DataDictionaries.DataDictionary.Description)).HasMaxLength(JS.Abp.DataDictionary.DataDictionaries.DataDictionaryConsts.DescriptionMaxLength);
+                 b.Property(x => x.IsActive).HasColumnName(nameof(JS.Abp.DataDictionary.DataDictionaries.DataDictionary.IsActive));
+                 //b.HasIndex(x => x.Code);
+             });
 
-        }
-        if (builder.IsHostDatabase())
-        {
-            builder.Entity<DataDictionaryItem>(b =>
-            {
-                b.ToTable(DataDictionaryDbProperties.DbTablePrefix + "DataDictionaryItems", DataDictionaryDbProperties.DbSchema);
-                b.ConfigureByConvention();
-                b.Property(x => x.Sequence).HasColumnName(nameof(DataDictionaryItem.Sequence)).IsRequired();
-                b.Property(x => x.Code).HasColumnName(nameof(DataDictionaryItem.Code)).IsRequired().HasMaxLength(DataDictionaryItemConsts.CodeMaxLength);
-                b.Property(x => x.DisplayText).HasColumnName(nameof(DataDictionaryItem.DisplayText)).IsRequired().HasMaxLength(DataDictionaryItemConsts.DisplayTextMaxLength);
-                b.Property(x => x.Description).HasColumnName(nameof(DataDictionaryItem.Description)).HasMaxLength(DataDictionaryItemConsts.DescriptionMaxLength);
-                b.Property(x => x.IsStatic).HasColumnName(nameof(DataDictionaryItem.IsStatic));
-                //b.HasOne<JS.Abp.DataDictionary.DataDictionaries.DataDictionary>().WithMany().HasForeignKey(x => x.DataDictionaryId).OnDelete(DeleteBehavior.NoAction);
-            });
-        }
+         }
+         if (builder.IsHostDatabase())
+         {
+             builder.Entity<DataDictionaryItem>(b =>
+             {
+                 b.ToTable(DataDictionaryDbProperties.DbTablePrefix + "DataDictionaryItems", DataDictionaryDbProperties.DbSchema);
+                 b.ConfigureByConvention();
+                 b.Property(x => x.Sequence).HasColumnName(nameof(DataDictionaryItem.Sequence));
+                 b.Property(x => x.Code).HasColumnName(nameof(DataDictionaryItem.Code)).HasMaxLength(DataDictionaryItemConsts.CodeMaxLength);
+                 b.Property(x => x.DisplayText).HasColumnName(nameof(DataDictionaryItem.DisplayText)).HasMaxLength(DataDictionaryItemConsts.DisplayTextMaxLength);
+                 b.Property(x => x.Description).HasColumnName(nameof(DataDictionaryItem.Description)).HasMaxLength(DataDictionaryItemConsts.DescriptionMaxLength);
+                 b.Property(x => x.IsActive).HasColumnName(nameof(DataDictionaryItem.IsActive));
+                 b.HasOne<JS.Abp.DataDictionary.DataDictionaries.DataDictionary>().WithMany().HasForeignKey(x => x.DataDictionaryId).OnDelete(DeleteBehavior.NoAction);
+             });
 
+         }
+  
+        
         /* Configure all entities here. Example:
 
         builder.Entity<Question>(b =>

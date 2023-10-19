@@ -2,7 +2,7 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
 {
     public static class DataDictionaryItemConsts
     {
-        private const string DefaultSorting = "{0}Code asc";
+        private const string DefaultSorting = "{0}Sequence asc";
 
         public static string GetDefaultSorting(bool withEntityName)
         {

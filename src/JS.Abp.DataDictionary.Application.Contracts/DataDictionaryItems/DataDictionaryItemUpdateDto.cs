@@ -17,7 +17,7 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
         public string DisplayText { get; set; }
         [StringLength(DataDictionaryItemConsts.DescriptionMaxLength)]
         public string Description { get; set; }
-        public bool IsStatic { get; set; }
+        public bool IsActive { get; set; }
         public Guid? DataDictionaryId { get; set; }
 
         public string ConcurrencyStamp { get; set; }

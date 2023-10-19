@@ -8,12 +8,12 @@ namespace JS.Abp.DataDictionary.DataDictionaries
     {
         [Required]
         [StringLength(DataDictionaryConsts.CodeMaxLength, MinimumLength = DataDictionaryConsts.CodeMinLength)]
-        public string Code { get; set; }
+        public string Code { get; set; } = null!;
         [Required]
         [StringLength(DataDictionaryConsts.DisplayTextMaxLength, MinimumLength = DataDictionaryConsts.DisplayTextMinLength)]
-        public string DisplayText { get; set; }
+        public string DisplayText { get; set; } = null!;
         [StringLength(DataDictionaryConsts.DescriptionMaxLength)]
-        public string Description { get; set; }
-        public bool IsStatic { get; set; }
+        public string? Description { get; set; }
+        public bool IsActive { get; set; }
     }
 }

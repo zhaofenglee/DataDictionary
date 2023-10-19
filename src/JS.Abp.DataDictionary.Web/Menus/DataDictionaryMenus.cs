@@ -1,10 +1,11 @@
-﻿namespace JS.Abp.DataDictionary.Web.Menus;
+namespace JS.Abp.DataDictionary.Web.Menus;
 
 public class DataDictionaryMenus
 {
     public const string Prefix = "DataDictionary";
 
-    //Add your menu items here...
-    //public const string Home = Prefix + ".MyNewMenuItem";
+    public const string DataDictionaryItems = Prefix + ".DataDictionaryItems";
+
+    public const string DataDictionaries = Prefix + ".DataDictionaries";
 
 }

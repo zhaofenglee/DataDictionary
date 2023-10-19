@@ -37,7 +37,11 @@ public class ClientDemoService : ITransientDependency
         Console.WriteLine();
         Console.WriteLine($"***** {nameof(TestWithDynamicProxiesAsync)} *****");
 
-      
+        // var result = await _sampleAppService.GetAsync();
+        // Console.WriteLine("Result: " + result.Value);
+        //
+        // result = await _sampleAppService.GetAuthorizedAsync();
+        // Console.WriteLine("Result (authorized): " + result.Value);
     }
 
     /* Shows how to use HttpClient to perform a request to the HTTP API.
@@ -85,6 +89,7 @@ public class ClientDemoService : ITransientDependency
     }
 
     /* Shows how to use HttpClient to perform a request to the HTTP API.
+     * It obtains access token using AuthServer's API.
      */
     private async Task TestAllManuallyAsync()
     {

@@ -1,0 +1,45 @@
+@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@using JS.Abp.DataDictionary.Localization
+@using JS.Abp.DataDictionary.Web.Pages.DataDictionary.DataDictionaries
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@using JS.Abp.DataDictionary.DataDictionaries;
+@using System.Globalization
+@inject IHtmlLocalizer<DataDictionaryResource> L
+@model EditModalModel
+@{
+    Layout = null;
+}
+
+<form data-ajaxForm="true" asp-page="/DataDictionary/DataDictionaries/EditModal" autocomplete="off">
+    <abp-modal id="DataDictionaryEditModal">
+        <abp-modal-header title="@L["Update"].Value"></abp-modal-header>
+
+        <abp-modal-body>
+
+                    <abp-input asp-for="Id" />
+                    <abp-input asp-for="DataDictionary.ConcurrencyStamp" hidden="true" suppress-label="true"/>
+                    
+
+            <abp-input asp-for="DataDictionary.Code"  readonly="true" />
+
+
+            <abp-input asp-for="DataDictionary.DisplayText"   />
+
+
+            <abp-input asp-for="DataDictionary.Description" text-area  />
+
+
+            <abp-input asp-for="DataDictionary.IsActive"   />
+
+                    
+                
+
+
+        </abp-modal-body>
+
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)">
+
+        </abp-modal-footer>
+    </abp-modal>
+</form>

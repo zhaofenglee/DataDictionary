@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
 using Volo.Abp.Data;
@@ -11,40 +12,46 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
 {
     public class DataDictionaryItemManager : DomainService
     {
-        private readonly IDataDictionaryItemRepository _dataDictionaryItemRepository;
+        protected IDataDictionaryItemRepository _dataDictionaryItemRepository;
 
         public DataDictionaryItemManager(IDataDictionaryItemRepository dataDictionaryItemRepository)
         {
             _dataDictionaryItemRepository = dataDictionaryItemRepository;
         }
 
-        public async Task<DataDictionaryItem> CreateAsync(
-        Guid? dataDictionaryId, string code, string displayText, string description, bool isStatic, int? sequence = null)
+        public virtual async Task<DataDictionaryItem> CreateAsync(
+        Guid? dataDictionaryId, int sequence, bool isActive, string? code = null, string? displayText = null, string? description = null)
         {
+            Check.Length(code, nameof(code), DataDictionaryItemConsts.CodeMaxLength);
+            Check.Length(displayText, nameof(displayText), DataDictionaryItemConsts.DisplayTextMaxLength);
+            Check.Length(description, nameof(description), DataDictionaryItemConsts.DescriptionMaxLength);
+
             var dataDictionaryItem = new DataDictionaryItem(
              GuidGenerator.Create(),
-             dataDictionaryId, code, displayText, description, isStatic,sequence
+             dataDictionaryId, sequence, isActive, code, displayText, description
              );
 
             return await _dataDictionaryItemRepository.InsertAsync(dataDictionaryItem);
         }
 
-        public async Task<DataDictionaryItem> UpdateAsync(
+        public virtual async Task<DataDictionaryItem> UpdateAsync(
             Guid id,
-            Guid? dataDictionaryId, string code, string displayText, string description, bool isStatic,int? sequence = null, [CanBeNull] string concurrencyStamp = null
+            Guid? dataDictionaryId, int sequence, bool isActive, string? code = null, string? displayText = null, string? description = null, [CanBeNull] string? concurrencyStamp = null
         )
         {
-            var queryable = await _dataDictionaryItemRepository.GetQueryableAsync();
-            var query = queryable.Where(x => x.Id == id);
+            Check.Length(code, nameof(code), DataDictionaryItemConsts.CodeMaxLength);
+            Check.Length(displayText, nameof(displayText), DataDictionaryItemConsts.DisplayTextMaxLength);
+            Check.Length(description, nameof(description), DataDictionaryItemConsts.DescriptionMaxLength);
 
-            var dataDictionaryItem = await AsyncExecuter.FirstOrDefaultAsync(query);
+            var dataDictionaryItem = await _dataDictionaryItemRepository.GetAsync(id);
 
             dataDictionaryItem.DataDictionaryId = dataDictionaryId;
+            dataDictionaryItem.Sequence = sequence;
+            dataDictionaryItem.IsActive = isActive;
             dataDictionaryItem.Code = code;
             dataDictionaryItem.DisplayText = displayText;
             dataDictionaryItem.Description = description;
-            dataDictionaryItem.IsStatic = isStatic;
-            dataDictionaryItem.Sequence = sequence;
+
             dataDictionaryItem.SetConcurrencyStampIfNotNull(concurrencyStamp);
             return await _dataDictionaryItemRepository.UpdateAsync(dataDictionaryItem);
         }

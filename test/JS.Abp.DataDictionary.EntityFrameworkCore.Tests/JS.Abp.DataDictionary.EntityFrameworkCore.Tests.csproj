@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.10" />
     <ProjectReference Include="..\..\src\JS.Abp.DataDictionary.EntityFrameworkCore\JS.Abp.DataDictionary.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\JS.Abp.DataDictionary.TestBase\JS.Abp.DataDictionary.TestBase.csproj" />
     <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="$(VoloAbpPackageVersion)" />

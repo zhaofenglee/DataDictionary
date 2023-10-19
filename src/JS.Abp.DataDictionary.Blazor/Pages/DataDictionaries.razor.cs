@@ -124,7 +124,7 @@ namespace JS.Abp.DataDictionary.Blazor.Pages
         {
             NewDataDictionary = new DataDictionaryCreateDto{
                 
-                IsStatic = true,
+                IsActive = true,
             };
             await NewDataDictionaryValidations.ClearAll();
             await CreateDataDictionaryModal.Show();

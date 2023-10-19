@@ -14,52 +14,39 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
 {
     public class DataDictionaryItem : FullAuditedAggregateRoot<Guid>
     {
-        public virtual JS.Abp.DataDictionary.DataDictionaries.DataDictionary DataDictionary { get; set; } 
-        public virtual int? Sequence { get; set; }
-        [NotNull]
-        public virtual string Code { get; set; }
-
-        [NotNull]
-        public virtual string DisplayText { get; set; }
+        public virtual int Sequence { get; set; }
 
         [CanBeNull]
-        public virtual string Description { get; set; }
+        public virtual string? Code { get; set; }
 
-        public virtual bool IsStatic { get; set; }
+        [CanBeNull]
+        public virtual string? DisplayText { get; set; }
+
+        [CanBeNull]
+        public virtual string? Description { get; set; }
+
+        public virtual bool IsActive { get; set; }
         public Guid? DataDictionaryId { get; set; }
 
-        public DataDictionaryItem()
+        protected DataDictionaryItem()
         {
 
         }
 
-        public DataDictionaryItem(Guid id, Guid? dataDictionaryId, string code, string displayText, string description, bool isStatic, int? sequence = null)
+        public DataDictionaryItem(Guid id, Guid? dataDictionaryId, int sequence, bool isActive, string? code = null, string? displayText = null, string? description = null)
         {
 
             Id = id;
-            Check.NotNull(code, nameof(code));
             Check.Length(code, nameof(code), DataDictionaryItemConsts.CodeMaxLength, 0);
-            Check.NotNull(displayText, nameof(displayText));
             Check.Length(displayText, nameof(displayText), DataDictionaryItemConsts.DisplayTextMaxLength, 0);
             Check.Length(description, nameof(description), DataDictionaryItemConsts.DescriptionMaxLength, 0);
+            Sequence = sequence;
+            IsActive = isActive;
             Code = code;
             DisplayText = displayText;
             Description = description;
-            IsStatic = isStatic;
-            Sequence = sequence;
             DataDictionaryId = dataDictionaryId;
         }
-
-        //public override object[] GetKeys()
-        //{
-        //    return new object[] { DataDictionaryId };
-        //}
-
-        //public void SetContent(string displayText, string description)
-        //{
-        //    DisplayText = displayText;
-        //    Description = description;
-        //}
 
     }
 }

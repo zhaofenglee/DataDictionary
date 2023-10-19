@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.DependencyInjection;
 using JS.Abp.DataDictionary.Localization;
 using JS.Abp.DataDictionary.Web.Menus;
@@ -52,7 +52,9 @@ public class DataDictionaryWebModule : AbpModule
 
         Configure<RazorPagesOptions>(options =>
         {
-                //Configure authorization.
-            });
+            //Configure authorization.
+            options.Conventions.AuthorizePage("/DataDictionaryItems/Index", DataDictionaryPermissions.DataDictionaries.Default);
+            options.Conventions.AuthorizePage("/DataDictionaries/Index", DataDictionaryPermissions.DataDictionaries.Default);
+        });
     }
 }

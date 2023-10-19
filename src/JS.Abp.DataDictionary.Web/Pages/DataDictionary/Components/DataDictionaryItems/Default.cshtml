@@ -1,0 +1,40 @@
+﻿@using JS.Abp.DataDictionary.Localization
+@using Microsoft.AspNetCore.Authorization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<DataDictionaryResource> L
+@inject IAuthorizationService Authorization
+@model JS.Abp.DataDictionary.Web.Pages.DataDictionary.Components.DataDictionaryItems.DataDictionaryItemsViewModel
+
+
+<abp-card>
+    <abp-card-body>
+        <abp-input type="hidden" asp-for="@Model.DataDictionaryId" label="@L["DataDictionaryId"].Value"/>
+
+        <abp-table striped-rows="true" id="DataDictionaryItemsTable">
+            <thead>
+            <tr>
+                <abp-row class="mb-3">
+
+                    <abp-column Class="justify-content-end" Style="text-align: right">
+                        <abp-button id="NewDataDictionaryItemButton" text="@L["NewDataDictionaryItem"].Value" icon="plus" size="Small" button-type="Primary"/>
+                    </abp-column>
+                </abp-row>
+
+
+            </tr>
+            <tr>
+                <th>@L["Actions"]</th>
+                <th>@L["Sequence"]</th>
+                <th>@L["Code"]</th>
+                <th>@L["DisplayText"]</th>
+                <th>@L["Description"]</th>
+                <th>@L["IsActive"]</th>
+              
+
+            </tr>
+            </thead>
+        </abp-table>
+
+    </abp-card-body>
+</abp-card>

@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using JS.Abp.DataDictionary.DataDictionaryItems;
+using JS.Abp.DataDictionary.DataDictionaries;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Modularity;
 using Volo.Abp.MongoDB;
 
@@ -14,9 +16,13 @@ public class DataDictionaryMongoDbModule : AbpModule
     {
         context.Services.AddMongoDbContext<DataDictionaryMongoDbContext>(options =>
         {
-                /* Add custom repositories here. Example:
-                 * options.AddRepository<Question, MongoQuestionRepository>();
-                 */
+            /* Add custom repositories here. Example:
+             * options.AddRepository<Question, MongoQuestionRepository>();
+             */
+            options.AddRepository<JS.Abp.DataDictionary.DataDictionaries.DataDictionary, DataDictionaries.MongoDataDictionaryRepository>();
+
+            options.AddRepository<DataDictionaryItem, DataDictionaryItems.MongoDataDictionaryItemRepository>();
+
         });
     }
 }

@@ -58,7 +58,8 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host.Pages
             await SetToolbarItemsAsync();
             await SetBreadcrumbItemsAsync();
             await SetPermissionsAsync();
-            DataDictionariesList = (await DataDictionariesAppService.FindByCodeAsync("DemoType")).Items;
+            var dataDictionariesList = await DataDictionariesAppService.FindByCodeAsync("DemoType");
+            DataDictionariesList = dataDictionariesList.Items;
         }
 
         protected virtual ValueTask SetBreadcrumbItemsAsync()

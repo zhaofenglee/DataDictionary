@@ -53,14 +53,14 @@ namespace JS.Abp.DataDictionary.DataDictionaries
             string code = null,
             string displayText = null,
             string description = null,
-            bool? isStatic = null)
+            bool? isActive = null)
         {
             return query
                     .WhereIf(!string.IsNullOrWhiteSpace(filterText), e => e.Code.Contains(filterText) || e.DisplayText.Contains(filterText) || e.Description.Contains(filterText))
                     .WhereIf(!string.IsNullOrWhiteSpace(code), e => e.Code.Contains(code))
                     .WhereIf(!string.IsNullOrWhiteSpace(displayText), e => e.DisplayText.Contains(displayText))
                     .WhereIf(!string.IsNullOrWhiteSpace(description), e => e.Description.Contains(description))
-                    .WhereIf(isStatic.HasValue, e => e.IsStatic == isStatic);
+                    .WhereIf(isActive.HasValue, e => e.IsActive == isActive);
         }
     }
 }

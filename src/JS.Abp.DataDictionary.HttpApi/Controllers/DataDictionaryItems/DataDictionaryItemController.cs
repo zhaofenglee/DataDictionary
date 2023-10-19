@@ -13,10 +13,10 @@ using Volo.Abp.Content;
 
 namespace JS.Abp.DataDictionary.Controllers.DataDictionaryItems
 {
-    [RemoteService]
-    [Area("app")]
+    [RemoteService(Name = DataDictionaryRemoteServiceConsts.RemoteServiceName)]
+    [Area("dataDictionary")]
     [ControllerName("DataDictionaryItem")]
-    [Route("api/app/data-dictionary-item")]
+    [Route("api/data-dictionary/data-dictionary-item")]
     public class DataDictionaryItemController : AbpController, IDataDictionaryItemsAppService
     {
         private readonly IDataDictionaryItemsAppService _dataDictionaryItemsAppService;
