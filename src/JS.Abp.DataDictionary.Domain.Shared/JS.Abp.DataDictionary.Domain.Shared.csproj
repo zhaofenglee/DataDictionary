@@ -7,7 +7,7 @@
         <Nullable>enable</Nullable>
         <RootNamespace>JS.Abp.DataDictionary</RootNamespace>
         <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
-        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>
