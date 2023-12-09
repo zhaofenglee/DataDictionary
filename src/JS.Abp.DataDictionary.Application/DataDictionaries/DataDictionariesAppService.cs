@@ -27,9 +27,7 @@ namespace JS.Abp.DataDictionary.DataDictionaries
         private readonly IDistributedCache<DataDictionaryExcelDownloadTokenCacheItem, string> _excelDownloadTokenCache;
         private readonly IDataDictionaryRepository _dataDictionaryRepository;
         private readonly DataDictionaryManager _dataDictionaryManager;
-        
-        protected DataDictionaryStore dataDictionaryStore => LazyServiceProvider.LazyGetRequiredService<DataDictionaryStore>();
-        
+
         public DataDictionariesAppService(IDataDictionaryRepository dataDictionaryRepository, DataDictionaryManager dataDictionaryManager, IDistributedCache<DataDictionaryExcelDownloadTokenCacheItem, string> excelDownloadTokenCache)
         {
             _excelDownloadTokenCache = excelDownloadTokenCache;
@@ -123,7 +121,7 @@ namespace JS.Abp.DataDictionary.DataDictionaries
 
         public virtual async Task<DataDictionaryDto> FindByCodeAsync(string code)
         {
-            return ObjectMapper.Map<DataDictionary, DataDictionaryDto>(await dataDictionaryStore.FindByCodeAsync(code)) ;
+            return ObjectMapper.Map<DataDictionary, DataDictionaryDto>(await _dataDictionaryRepository.FindByCodeAsync(code)) ;
         }
         
        

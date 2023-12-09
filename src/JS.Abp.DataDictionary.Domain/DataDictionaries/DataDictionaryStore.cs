@@ -10,6 +10,9 @@ using Volo.Abp.Threading;
 
 namespace JS.Abp.DataDictionary.DataDictionaries;
 
+/// <summary>
+/// There is a problem with retrieving data dictionary from cache, it is now modified to directly retrieve it from the repository. This functionality is deprecated.
+/// </summary>
 public class DataDictionaryStore:IDataDictionaryStore, ITransientDependency
 {
     private readonly IDataDictionaryRepository _dataDictionaryRepository;
@@ -65,7 +68,6 @@ public class DataDictionaryStore:IDataDictionaryStore, ITransientDependency
         var items = await _dataDictionaryItemRepository.GetListAsync(x => x.DataDictionaryId == dataDictionary.Id&&x.IsActive);
         if (items.Count>0)
         {
-            dataDictionary.Items.AddRange(items);
             return dataDictionary;
         }
         else

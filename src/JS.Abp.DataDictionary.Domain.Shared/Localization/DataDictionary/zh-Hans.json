@@ -26,6 +26,7 @@
     "Permission:Edit": "编辑",
     "Permission:Delete": "删除",
     "Menu:DataDictionariessDetail": "数据字典明细",
-    "IsActive": "是否启用"
+    "IsActive": "是否启用",
+    "Menu:DataDictionary": "数据字典"
   }
 }

@@ -14,7 +14,7 @@ namespace JS.Abp.DataDictionary.DataDictionaries
         [StringLength(DataDictionaryConsts.DisplayTextMaxLength, MinimumLength = DataDictionaryConsts.DisplayTextMinLength)]
         public string DisplayText { get; set; }
         [StringLength(DataDictionaryConsts.DescriptionMaxLength)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public bool IsActive { get; set; }
 
         public string ConcurrencyStamp { get; set; }

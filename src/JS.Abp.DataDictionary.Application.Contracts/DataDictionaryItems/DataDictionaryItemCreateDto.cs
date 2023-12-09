@@ -15,7 +15,7 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
         [StringLength(DataDictionaryItemConsts.DisplayTextMaxLength)]
         public string DisplayText { get; set; }
         [StringLength(DataDictionaryItemConsts.DescriptionMaxLength)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public bool IsActive { get; set; }
         public Guid? DataDictionaryId { get; set; }
     }

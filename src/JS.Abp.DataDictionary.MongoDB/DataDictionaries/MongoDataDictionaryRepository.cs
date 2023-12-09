@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading;
 using System.Threading.Tasks;
+using JS.Abp.DataDictionary.DataDictionaryItems;
 using JS.Abp.DataDictionary.MongoDB;
 using Volo.Abp.Domain.Repositories.MongoDB;
 using Volo.Abp.MongoDB;
@@ -17,6 +19,14 @@ namespace JS.Abp.DataDictionary.DataDictionaries
         public MongoDataDictionaryRepository(IMongoDbContextProvider<DataDictionaryMongoDbContext> dbContextProvider)
             : base(dbContextProvider)
         {
+        }
+
+        public async Task<DataDictionary> FindByCodeAsync(string code, CancellationToken cancellationToken = default)
+        {
+            var dataDictionary = await (await GetMongoQueryableAsync<DataDictionaries.DataDictionary>(cancellationToken)).FirstOrDefaultAsync(e => e.Code ==code && e.IsActive, cancellationToken: cancellationToken);
+            var dataDictionaryItem =  (await GetMongoQueryableAsync<DataDictionaryItem>(cancellationToken)).Where(e => e.DataDictionaryId == dataDictionary.Id && e.IsActive);
+            dataDictionary.AddItem(new Collection<DataDictionaryItem>(dataDictionaryItem.ToList()));
+            return dataDictionary;
         }
 
         public virtual async Task<List<DataDictionary>> GetListAsync(

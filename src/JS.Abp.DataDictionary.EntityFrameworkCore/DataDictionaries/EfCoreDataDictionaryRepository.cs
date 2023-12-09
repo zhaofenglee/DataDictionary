@@ -19,6 +19,12 @@ namespace JS.Abp.DataDictionary.DataDictionaries
 
         }
 
+        public async Task<DataDictionary> FindByCodeAsync(string code, CancellationToken cancellationToken = default)
+        {
+            var query = ApplyFilter((await GetQueryableAsync()), code: code, isActive: true).Include(x=>x.Items);
+            return query.FirstOrDefault();
+        }
+
         public async Task<List<DataDictionary>> GetListAsync(
             string filterText = null,
             string code = null,
@@ -49,7 +55,7 @@ namespace JS.Abp.DataDictionary.DataDictionaries
 
         protected virtual IQueryable<DataDictionary> ApplyFilter(
             IQueryable<DataDictionary> query,
-            string filterText,
+            string filterText = null,
             string code = null,
             string displayText = null,
             string description = null,

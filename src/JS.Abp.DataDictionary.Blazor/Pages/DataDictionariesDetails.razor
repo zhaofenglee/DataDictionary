@@ -154,6 +154,17 @@
                             Model="@NewDataDictionaryItem"
                             ValidateOnLoad="false">
                      
+                    <Validation>
+                        <Field>
+                            <FieldLabel>@L["Sequence"] *</FieldLabel>
+                            <NumericEdit @bind-Value="@NewDataDictionaryItem.Sequence" >
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </NumericEdit>
+                        </Field>
+                    </Validation>
+                    
                     
                     <Validation>
                         <Field>
@@ -190,16 +201,7 @@
                         </Field>
                     </Validation>
 
-                      <Validation>
-                        <Field>
-                            <FieldLabel>@L["Sequence"] *</FieldLabel>
-                            <NumericEdit @bind-Value="@NewDataDictionaryItem.Sequence" >
-                                <Feedback>
-                                    <ValidationError />
-                                </Feedback>
-                            </NumericEdit>
-                        </Field>
-                    </Validation>
+                     
 
                     <Field>
                         <Check TValue="bool" @bind-Checked="@NewDataDictionaryItem.IsActive">@L["IsActive"]</Check>
@@ -234,6 +236,17 @@
                             Model="@EditingDataDictionaryItem"
                             ValidateOnLoad="false">
                      
+                    <Validation>
+                        <Field>
+                            <FieldLabel>@L["Sequence"] *</FieldLabel>
+                            <NumericEdit @bind-Value="@EditingDataDictionaryItem.Sequence">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </NumericEdit>
+                        </Field>
+                    </Validation>
+                    
                     
                     <Validation>
                         <Field>
@@ -270,16 +283,7 @@
                         </Field>
                     </Validation>
 
-                      <Validation>
-                        <Field>
-                            <FieldLabel>@L["Sequence"] *</FieldLabel>
-                            <NumericEdit @bind-Value="@EditingDataDictionaryItem.Sequence">
-                                <Feedback>
-                                    <ValidationError />
-                                </Feedback>
-                            </NumericEdit>
-                        </Field>
-                    </Validation>
+                     
 
                     <Field>
                         <Check TValue="bool" @bind-Checked="@EditingDataDictionaryItem.IsActive">@L["IsActive"]</Check>
