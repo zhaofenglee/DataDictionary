@@ -1,10 +1,10 @@
 <Project>
 	<PropertyGroup>
 		<LangVersion>latest</LangVersion>
-		<Version>7.4.3</Version>
-		<VoloAbpPackageVersion>7.4.3</VoloAbpPackageVersion>
+		<Version>7.4.4</Version>
+		<VoloAbpPackageVersion>7.4.4</VoloAbpPackageVersion>
 		<BlazoriseVersion>1.3.1</BlazoriseVersion>
-		<MicrosoftAspNetCorePackageVersion>7.0.10</MicrosoftAspNetCorePackageVersion>
+		<MicrosoftAspNetCorePackageVersion>7.0.14</MicrosoftAspNetCorePackageVersion>
 		<Description>Abp DataDictionary Module</Description>
 		<Authors>zhaofenglee</Authors>
 		<NoWarn>$(NoWarn);CS1591</NoWarn>
