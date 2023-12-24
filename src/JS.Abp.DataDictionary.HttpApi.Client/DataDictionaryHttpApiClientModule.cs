@@ -21,6 +21,5 @@ public class DataDictionaryHttpApiClientModule : AbpModule
         {
             options.FileSets.AddEmbedded<DataDictionaryHttpApiClientModule>();
         });
-
     }
 }

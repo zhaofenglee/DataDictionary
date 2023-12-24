@@ -21,9 +21,13 @@ namespace JS.Abp.DataDictionary.DataDictionaries
         {
         }
 
-        public async Task<DataDictionary> FindByCodeAsync(string code, CancellationToken cancellationToken = default)
+        public async Task<DataDictionary?> FindByCodeAsync(string code, CancellationToken cancellationToken = default)
         {
             var dataDictionary = await (await GetMongoQueryableAsync<DataDictionaries.DataDictionary>(cancellationToken)).FirstOrDefaultAsync(e => e.Code ==code && e.IsActive, cancellationToken: cancellationToken);
+            if (dataDictionary == null)
+            {
+                return null;
+            }
             var dataDictionaryItem =  (await GetMongoQueryableAsync<DataDictionaryItem>(cancellationToken)).Where(e => e.DataDictionaryId == dataDictionary.Id && e.IsActive);
             dataDictionary.AddItem(new Collection<DataDictionaryItem>(dataDictionaryItem.ToList()));
             return dataDictionary;

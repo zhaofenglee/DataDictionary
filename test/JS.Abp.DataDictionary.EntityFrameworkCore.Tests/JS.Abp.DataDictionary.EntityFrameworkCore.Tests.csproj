@@ -3,16 +3,20 @@
   <Import Project="..\..\common.props" />
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
     <RootNamespace>JS.Abp.DataDictionary</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.10" />
-    <ProjectReference Include="..\..\src\JS.Abp.DataDictionary.EntityFrameworkCore\JS.Abp.DataDictionary.EntityFrameworkCore.csproj" />
-    <ProjectReference Include="..\JS.Abp.DataDictionary.TestBase\JS.Abp.DataDictionary.TestBase.csproj" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="$(VoloAbpPackageVersion)" />
     <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="$(VoloAbpPackageVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\JS.Abp.DataDictionary.EntityFrameworkCore\JS.Abp.DataDictionary.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\JS.Abp.DataDictionary.Application.Tests\JS.Abp.DataDictionary.Application.Tests.csproj" />
   </ItemGroup>
 
 </Project>

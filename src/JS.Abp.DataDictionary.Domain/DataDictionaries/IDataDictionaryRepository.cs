@@ -8,7 +8,7 @@ namespace JS.Abp.DataDictionary.DataDictionaries
 {
     public interface IDataDictionaryRepository : IRepository<DataDictionary, Guid>
     {
-        Task<DataDictionary> FindByCodeAsync(string code, CancellationToken cancellationToken = default);
+        Task<DataDictionary?> FindByCodeAsync(string code, CancellationToken cancellationToken = default);
         Task<List<DataDictionary>> GetListAsync(
             string? filterText = null,
             string? code = null,
