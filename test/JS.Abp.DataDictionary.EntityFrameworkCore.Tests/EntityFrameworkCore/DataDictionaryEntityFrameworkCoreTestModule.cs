@@ -10,15 +10,16 @@ using Volo.Abp.Uow;
 namespace JS.Abp.DataDictionary.EntityFrameworkCore;
 
 [DependsOn(
-    typeof(DataDictionaryTestBaseModule),
+    typeof(DataDictionaryApplicationTestModule),
     typeof(DataDictionaryEntityFrameworkCoreModule),
     typeof(AbpEntityFrameworkCoreSqliteModule)
-    )]
+)]
 public class DataDictionaryEntityFrameworkCoreTestModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         context.Services.AddAlwaysDisableUnitOfWorkTransaction();
+
         var sqliteConnection = CreateDatabaseAndGetConnection();
 
         Configure<AbpDbContextOptions>(options =>

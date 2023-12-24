@@ -4,8 +4,8 @@ using Volo.Abp.Modularity;
 namespace JS.Abp.DataDictionary.Blazor.Server;
 
 [DependsOn(
-    typeof(AbpAspNetCoreComponentsServerThemingModule),
-    typeof(DataDictionaryBlazorModule)
+    typeof(DataDictionaryBlazorModule),
+    typeof(AbpAspNetCoreComponentsServerThemingModule)
     )]
 public class DataDictionaryBlazorServerModule : AbpModule
 {

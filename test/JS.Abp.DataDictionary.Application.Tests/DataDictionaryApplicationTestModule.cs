@@ -8,5 +8,8 @@ namespace JS.Abp.DataDictionary;
     )]
 public class DataDictionaryApplicationTestModule : AbpModule
 {
-
+    public override void ConfigureServices(ServiceConfigurationContext context)
+    {
+       
+    }
 }

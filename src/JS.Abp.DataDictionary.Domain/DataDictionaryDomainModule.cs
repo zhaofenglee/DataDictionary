@@ -6,8 +6,8 @@ namespace JS.Abp.DataDictionary;
 
 [DependsOn(
     typeof(AbpDddDomainModule),
-    typeof(DataDictionaryDomainSharedModule),
-    typeof(AbpCachingModule)
+    typeof(AbpCachingModule),
+    typeof(DataDictionaryDomainSharedModule)
 )]
 public class DataDictionaryDomainModule : AbpModule
 {

@@ -13,7 +13,7 @@ namespace JS.Abp.DataDictionary.DataDictionaries
 {
     public class DataDictionaryPropertyManager : DomainService
     {
-        protected IDataDictionaryStore dataDictionaryStore => LazyServiceProvider.LazyGetRequiredService<IDataDictionaryStore>();
+        protected IDataDictionaryRepository dataDictionaryRepository => LazyServiceProvider.LazyGetRequiredService<IDataDictionaryRepository>();
 
         public virtual async Task<TDto> GetAsync<TDto>(TDto sourceDto)
         {
@@ -35,8 +35,8 @@ namespace JS.Abp.DataDictionary.DataDictionaries
             {
                 foreach(var info in list)
                 {
-                    var dataDictionary = await dataDictionaryStore.FindByCodeAsync(info.DictionaryCode);
-                    if (dataDictionary != null && dataDictionary.Items.Count > 0)
+                    var dataDictionary = await dataDictionaryRepository.FindByCodeAsync(info.DictionaryCode);
+                    if (dataDictionary is { Items.Count: > 0 })
                     {
                         var dataCode = (string)info.Property.GetValue(sourceDto);
                         if (dataCode == null)

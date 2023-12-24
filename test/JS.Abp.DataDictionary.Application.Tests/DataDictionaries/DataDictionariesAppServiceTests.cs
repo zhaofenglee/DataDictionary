@@ -3,11 +3,13 @@ using System.Linq;
 using Shouldly;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Modularity;
 using Xunit;
 
 namespace JS.Abp.DataDictionary.DataDictionaries
 {
-    public class DataDictionariesAppServiceTests : DataDictionaryApplicationTestBase
+    public abstract class DataDictionariesAppServiceTests <TStartupModule> : DataDictionaryApplicationTestBase<TStartupModule>
+        where TStartupModule : IAbpModule
     {
         private readonly IDataDictionariesAppService _dataDictionariesAppService;
         private readonly IRepository<DataDictionary, Guid> _dataDictionaryRepository;

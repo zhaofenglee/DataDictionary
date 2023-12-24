@@ -7,7 +7,7 @@ namespace JS.Abp.DataDictionary.Blazor.WebAssembly;
     typeof(DataDictionaryBlazorModule),
     typeof(DataDictionaryHttpApiClientModule),
     typeof(AbpAspNetCoreComponentsWebAssemblyThemingModule)
-    )]
+)]
 public class DataDictionaryBlazorWebAssemblyModule : AbpModule
 {
 

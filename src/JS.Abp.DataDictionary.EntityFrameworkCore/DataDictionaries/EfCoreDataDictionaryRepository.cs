@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading;
 using System.Threading.Tasks;
+using JS.Abp.DataDictionary.DataDictionaryItems;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -17,6 +19,18 @@ namespace JS.Abp.DataDictionary.DataDictionaries
             : base(dbContextProvider)
         {
 
+        }
+
+        public async Task<DataDictionary?> FindByCodeAsync(string code, CancellationToken cancellationToken = default)
+        {
+            var dataDictionary = (await GetQueryableAsync()).FirstOrDefault(e => e.Code == code && e.IsActive);
+            if (dataDictionary == null)
+            {
+                return null;
+            }
+            var dataDictionaryItem =  (await GetDbContextAsync()).DataDictionaryItems.Where(e => e.DataDictionaryId == dataDictionary.Id && e.IsActive);
+            dataDictionary.AddItem(new Collection<DataDictionaryItem>(dataDictionaryItem.ToList()));
+            return dataDictionary;
         }
 
         public async Task<List<DataDictionary>> GetListAsync(
@@ -49,7 +63,7 @@ namespace JS.Abp.DataDictionary.DataDictionaries
 
         protected virtual IQueryable<DataDictionary> ApplyFilter(
             IQueryable<DataDictionary> query,
-            string filterText,
+            string filterText = null,
             string code = null,
             string displayText = null,
             string description = null,
