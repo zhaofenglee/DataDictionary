@@ -3,11 +3,13 @@ using System.Linq;
 using Shouldly;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Modularity;
 using Xunit;
 
 namespace JS.Abp.DataDictionary.DataDictionaryItems
 {
-    public class DataDictionaryItemsAppServiceTests : DataDictionaryApplicationTestBase
+    public abstract class DataDictionaryItemsAppServiceTests <TStartupModule> : DataDictionaryApplicationTestBase<TStartupModule>
+        where TStartupModule : IAbpModule
     {
         private readonly IDataDictionaryItemsAppService _dataDictionaryItemsAppService;
         private readonly IRepository<DataDictionaryItem, Guid> _dataDictionaryItemRepository;
@@ -25,8 +27,8 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
             var result = await _dataDictionaryItemsAppService.GetListAsync(new GetDataDictionaryItemsInput());
 
             // Assert
-            result.TotalCount.ShouldBe(2);
-            result.Items.Count.ShouldBe(2);
+            result.TotalCount.ShouldBe(4);
+            result.Items.Count.ShouldBe(4);
             result.Items.Any(x => x.DataDictionaryItem.Id == Guid.Parse("65a8377e-c1f2-4eae-8ed2-952842893d23")).ShouldBe(true);
             result.Items.Any(x => x.DataDictionaryItem.Id == Guid.Parse("46696fd3-74fd-48c9-a9dd-51d2b1b21b63")).ShouldBe(true);
         }

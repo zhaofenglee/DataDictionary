@@ -4,19 +4,23 @@ using System.Threading.Tasks;
 using IdentityModel.Client;
 using Microsoft.Extensions.Configuration;
 using Volo.Abp.DependencyInjection;
+using Volo.Abp.Http.Client.IdentityModel;
 using Volo.Abp.IdentityModel;
 
 namespace JS.Abp.DataDictionary;
 
 public class ClientDemoService : ITransientDependency
 {
+    //private readonly ISampleAppService _sampleAppService;
     private readonly IIdentityModelAuthenticationService _authenticationService;
     private readonly IConfiguration _configuration;
 
     public ClientDemoService(
+        //ISampleAppService sampleAppService,
         IIdentityModelAuthenticationService authenticationService,
         IConfiguration configuration)
     {
+        //_sampleAppService = sampleAppService;
         _authenticationService = authenticationService;
         _configuration = configuration;
     }
@@ -39,7 +43,7 @@ public class ClientDemoService : ITransientDependency
 
         // var result = await _sampleAppService.GetAsync();
         // Console.WriteLine("Result: " + result.Value);
-        //
+
         // result = await _sampleAppService.GetAuthorizedAsync();
         // Console.WriteLine("Result (authorized): " + result.Value);
     }

@@ -7,9 +7,9 @@ using Volo.Abp.Uow;
 namespace JS.Abp.DataDictionary.MongoDB;
 
 [DependsOn(
-    typeof(DataDictionaryTestBaseModule),
+    typeof(DataDictionaryApplicationTestModule),
     typeof(DataDictionaryMongoDbModule)
-    )]
+)]
 public class DataDictionaryMongoDbTestModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
