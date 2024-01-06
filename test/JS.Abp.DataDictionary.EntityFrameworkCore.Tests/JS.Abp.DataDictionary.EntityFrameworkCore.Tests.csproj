@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="$(VoloAbpPackageVersion)" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="$(MicrosoftAspNetCorePackageVersion)" />
     <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="$(VoloAbpPackageVersion)" />
   </ItemGroup>
 
