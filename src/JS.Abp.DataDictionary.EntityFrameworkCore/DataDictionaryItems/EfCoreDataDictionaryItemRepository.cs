@@ -56,7 +56,8 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
         protected virtual async Task<IQueryable<DataDictionaryItemWithNavigationProperties>> GetQueryForNavigationPropertiesAsync()
         {
             return from dataDictionaryItem in (await GetDbSetAsync())
-                   join dataDictionary in (await GetDbContextAsync()).Dictionaries on dataDictionaryItem.DataDictionaryId equals dataDictionary.Id into dataDictionaries
+                   join dataDictionary in (await GetDbContextAsync()).Dictionaries on dataDictionaryItem.DataDictionaryId
+                       equals dataDictionary.Id into dataDictionaries
                    from dataDictionary in dataDictionaries.DefaultIfEmpty()
 
                    select new DataDictionaryItemWithNavigationProperties
