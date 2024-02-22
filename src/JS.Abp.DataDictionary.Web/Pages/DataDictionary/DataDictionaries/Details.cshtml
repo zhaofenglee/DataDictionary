@@ -12,7 +12,8 @@
 @model JS.Abp.DataDictionary.Web.Pages.DataDictionary.DataDictionaries.DetailsModel
 @inject IPageLayout PageLayout
 @{
-    PageLayout.Content.Title = L["DataDictionaryItems"].Value;
+    PageLayout.Content.Title = L["Menu:DataDictionaryItems"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:DataDictionaries"].Value, "/DataDictionary/DataDictionaries");
     PageLayout.Content.MenuItemName = DataDictionaryMenus.DataDictionaryItems;
 }
 
@@ -43,7 +44,7 @@
             <div class="container mb-4">
                 <div class="row">
                     <div class="col">
-                        <span class="text-muted">@L["Code"]</span>
+                        <span class="text-muted">@L["DataDictionary:Code"]</span>
                         <p class="h4">@Model.DataDictionary.Code</p>
                     </div>
                     <div class="col">

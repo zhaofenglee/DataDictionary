@@ -26,7 +26,10 @@
     "Permission:Edit": "编辑",
     "Permission:Delete": "删除",
     "Menu:DataDictionariessDetail": "数据字典明细",
+    "Menu:DataDictionaryItems": "数据字典明细",
     "IsActive": "是否启用",
-    "Menu:DataDictionary": "数据字典"
+    "Menu:DataDictionary": "数据字典",
+    "Actions": "操作",
+    "SeeAdvancedFilters": "查看高级过滤"
   }
 }
