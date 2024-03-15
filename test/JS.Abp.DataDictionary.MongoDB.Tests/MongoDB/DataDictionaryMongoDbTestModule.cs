@@ -18,5 +18,9 @@ public class DataDictionaryMongoDbTestModule : AbpModule
         {
             options.ConnectionStrings.Default = MongoDbFixture.GetRandomConnectionString();
         });
+        Configure<AbpUnitOfWorkDefaultOptions>(options =>
+        {
+            options.TransactionBehavior = UnitOfWorkTransactionBehavior.Disabled;
+        });
     }
 }

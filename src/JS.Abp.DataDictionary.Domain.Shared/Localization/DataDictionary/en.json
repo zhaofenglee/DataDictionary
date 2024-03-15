@@ -30,6 +30,7 @@
     "Menu:DataDictionaryItems": "Data Dictionary Items",
     "DataDictionary": "Data dictionary",
     "Menu:DataDictionariessDetail": "DataDictionariess Detail",
-    "IsActive": "Is Active"
+    "IsActive": "Is Active",
+    "DataDictionary:Code": "Code"
   }
 }
