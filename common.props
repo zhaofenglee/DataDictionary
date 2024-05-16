@@ -1,8 +1,8 @@
 <Project>
 	<PropertyGroup>
 		<LangVersion>latest</LangVersion>
-		<Version>8.1.2</Version>
-		<VoloAbpPackageVersion>8.1.2</VoloAbpPackageVersion>
+		<Version>8.1.3</Version>
+		<VoloAbpPackageVersion>8.1.3</VoloAbpPackageVersion>
 		<BlazoriseVersion>1.4.1</BlazoriseVersion>
 		<MicrosoftAspNetCorePackageVersion>8.0.0</MicrosoftAspNetCorePackageVersion>
 		<Description>Abp DataDictionary Module</Description>
