@@ -31,6 +31,9 @@
     "IsActive": "是否启用",
     "Menu:DataDictionary": "数据字典",
     "Actions": "操作",
-    "SeeAdvancedFilters": "查看高级过滤"
+    "SeeAdvancedFilters": "查看高级过滤",
+    "Cancel": "取消",
+    "Edit": "编辑",
+    "Delete": "删除"
   }
 }

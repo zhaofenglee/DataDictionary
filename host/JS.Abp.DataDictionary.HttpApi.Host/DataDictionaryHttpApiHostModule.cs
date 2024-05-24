@@ -81,7 +81,7 @@ public class DataDictionaryHttpApiHostModule : AbpModule
         }
 
         context.Services.AddAbpSwaggerGenWithOAuth(
-            configuration["AuthServer:Authority"],
+            configuration["AuthServer:Authority"]!,
             new Dictionary<string, string>
             {
                 {"DataDictionary", "DataDictionary API"}
@@ -101,9 +101,9 @@ public class DataDictionaryHttpApiHostModule : AbpModule
             options.Languages.Add(new LanguageInfo("en-GB", "en-GB", "English (UK)"));
             options.Languages.Add(new LanguageInfo("fi", "fi", "Finnish"));
             options.Languages.Add(new LanguageInfo("fr", "fr", "Français"));
-            options.Languages.Add(new LanguageInfo("hi", "hi", "Hindi", "in"));
-            options.Languages.Add(new LanguageInfo("is", "is", "Icelandic", "is"));
-            options.Languages.Add(new LanguageInfo("it", "it", "Italiano", "it"));
+            options.Languages.Add(new LanguageInfo("hi", "hi", "Hindi"));
+            options.Languages.Add(new LanguageInfo("is", "is", "Icelandic"));
+            options.Languages.Add(new LanguageInfo("it", "it", "Italiano"));
             options.Languages.Add(new LanguageInfo("hu", "hu", "Magyar"));
             options.Languages.Add(new LanguageInfo("pt-BR", "pt-BR", "Português"));
             options.Languages.Add(new LanguageInfo("ro-RO", "ro-RO", "Română"));
@@ -121,7 +121,7 @@ public class DataDictionaryHttpApiHostModule : AbpModule
             .AddJwtBearer(options =>
             {
                 options.Authority = configuration["AuthServer:Authority"];
-                options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
+                options.RequireHttpsMetadata = configuration.GetValue<bool>("AuthServer:RequireHttpsMetadata");
                 options.Audience = "DataDictionary";
             });
 
@@ -133,7 +133,7 @@ public class DataDictionaryHttpApiHostModule : AbpModule
         var dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName("DataDictionary");
         if (!hostingEnvironment.IsDevelopment())
         {
-            var redis = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]);
+            var redis = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]!);
             dataProtectionBuilder.PersistKeysToStackExchangeRedis(redis, "DataDictionary-Protection-Keys");
         }
 
@@ -143,10 +143,10 @@ public class DataDictionaryHttpApiHostModule : AbpModule
             {
                 builder
                     .WithOrigins(
-                        configuration["App:CorsOrigins"]
+                        configuration["App:CorsOrigins"]?
                             .Split(",", StringSplitOptions.RemoveEmptyEntries)
                             .Select(o => o.RemovePostFix("/"))
-                            .ToArray()
+                            .ToArray() ?? Array.Empty<string>()
                     )
                     .WithAbpExposedHeaders()
                     .SetIsOriginAllowedToAllowWildcardSubdomains()

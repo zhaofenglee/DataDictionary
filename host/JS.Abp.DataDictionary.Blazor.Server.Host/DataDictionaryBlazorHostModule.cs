@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
+using JS.Abp.DataDictionary.Blazor.Server.Host.Components;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
@@ -53,6 +54,8 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
 using JS.Abp.DataDictionary.Blazor.Server.Host.EntityFrameworkCore;
 using JS.Abp.DataDictionary.Blazor.Server.Host.Demos;
+using Microsoft.Extensions.Options;
+using Volo.Abp.AspNetCore.Components.Server;
 using Volo.Abp.AutoMapper;
 
 namespace JS.Abp.DataDictionary.Blazor.Server.Host;
@@ -67,6 +70,7 @@ namespace JS.Abp.DataDictionary.Blazor.Server.Host;
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpAccountWebOpenIddictModule),
     typeof(AbpAccountApplicationModule),
+    typeof(AbpAccountHttpApiModule),
     typeof(AbpAspNetCoreComponentsServerBasicThemeModule),
     typeof(AbpIdentityApplicationModule),
     typeof(AbpIdentityEntityFrameworkCoreModule),
@@ -110,12 +114,21 @@ public class DataDictionaryBlazorHostModule : AbpModule
                 options.UseAspNetCore();
             });
         });
+
+        PreConfigure<AbpAspNetCoreComponentsWebOptions>(options =>
+        {
+            options.IsBlazorWebApp = true;
+        });
     }
 
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         var hostingEnvironment = context.Services.GetHostingEnvironment();
         var configuration = context.Services.GetConfiguration();
+
+        // Add services to the container.
+        context.Services.AddRazorComponents()
+            .AddInteractiveServerComponents();
 
         context.Services.ForwardIdentityAuthenticationForBearer(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
 
@@ -160,7 +173,7 @@ public class DataDictionaryBlazorHostModule : AbpModule
                 {
                     bundle.AddFiles("/blazor-global-styles.css");
                         //You can remove the following line if you don't use Blazor CSS isolation for components
-                        bundle.AddFiles("/JS.Abp.DataDictionary.Blazor.Server.Host.styles.css");
+                        bundle.AddFiles(new BundleFile("/JS.Abp.DataDictionary.Blazor.Server.Host.styles.css", true));
                 }
             );
         });
@@ -193,8 +206,8 @@ public class DataDictionaryBlazorHostModule : AbpModule
             options.Languages.Add(new LanguageInfo("en-GB", "en-GB", "English (UK)"));
             options.Languages.Add(new LanguageInfo("fi", "fi", "Finnish"));
             options.Languages.Add(new LanguageInfo("fr", "fr", "Français"));
-            options.Languages.Add(new LanguageInfo("hi", "hi", "Hindi", "in"));
-            options.Languages.Add(new LanguageInfo("it", "it", "Italian", "it"));
+            options.Languages.Add(new LanguageInfo("hi", "hi", "Hindi"));
+            options.Languages.Add(new LanguageInfo("it", "it", "Italian"));
             options.Languages.Add(new LanguageInfo("hu", "hu", "Magyar"));
             options.Languages.Add(new LanguageInfo("pt-BR", "pt-BR", "Português (Brasil)"));
             options.Languages.Add(new LanguageInfo("ro-RO", "ro-RO", "Română"));
@@ -230,7 +243,7 @@ public class DataDictionaryBlazorHostModule : AbpModule
             Configure<AppUrlOptions>(options =>
             {
                 options.Applications["MVC"].RootUrl = configuration["App:SelfUrl"];
-                options.RedirectAllowedUrls.AddRange(configuration["App:RedirectAllowedUrls"].Split(','));
+                options.RedirectAllowedUrls.AddRange(configuration["App:RedirectAllowedUrls"]?.Split(',') ?? Array.Empty<string>());
             });
 
 #if DEBUG
@@ -238,7 +251,7 @@ public class DataDictionaryBlazorHostModule : AbpModule
 #endif
     }
 
-    public async override Task OnApplicationInitializationAsync(ApplicationInitializationContext context)
+    public override async Task OnApplicationInitializationAsync(ApplicationInitializationContext context)
     {
         var env = context.GetEnvironment();
         var app = context.GetApplicationBuilder();
@@ -268,13 +281,19 @@ public class DataDictionaryBlazorHostModule : AbpModule
         }
 
         app.UseUnitOfWork();
+        app.UseAntiforgery();
         app.UseAuthorization();
         app.UseSwagger();
         app.UseAbpSwaggerUI(options =>
         {
             options.SwaggerEndpoint("/swagger/v1/swagger.json", "DataDictionary API");
         });
-        app.UseConfiguredEndpoints();
+        app.UseConfiguredEndpoints(builder =>
+        {
+            builder.MapRazorComponents<App>()
+                .AddInteractiveServerRenderMode()
+                .AddAdditionalAssemblies(builder.ServiceProvider.GetRequiredService<IOptions<AbpRouterOptions>>().Value.AdditionalAssemblies.ToArray());
+        });
 
         using (var scope = context.ServiceProvider.CreateScope())
         {
