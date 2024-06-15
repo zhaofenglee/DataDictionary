@@ -36,7 +36,7 @@
 
     var getFilter = function() {
         return {
-            filterText: $("#FilterText").val(),
+            filterText: $("#FilterItemsText").val(),
             dataDictionaryId: $("#DataDictionaryId").val(),
             sequenceMin: $("#SequenceFilterMin").val(),
             sequenceMax: $("#SequenceFilterMax").val(),
@@ -129,7 +129,7 @@
         createModal.open({DataDictionaryId: $("#DataDictionaryId").val()});
     });
 
-    $("#SearchForm").submit(function (e) {
+    $("#SearchFormItem").submit(function (e) {
         e.preventDefault();
         dataTable.ajax.reloadEx();;
     });
