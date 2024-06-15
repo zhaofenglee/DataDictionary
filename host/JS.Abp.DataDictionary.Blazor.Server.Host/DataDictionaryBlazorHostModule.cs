@@ -56,6 +56,7 @@ using JS.Abp.DataDictionary.Blazor.Server.Host.EntityFrameworkCore;
 using JS.Abp.DataDictionary.Blazor.Server.Host.Demos;
 using Microsoft.Extensions.Options;
 using Volo.Abp.AspNetCore.Components.Server;
+using Volo.Abp.AspNetCore.Components.Web;
 using Volo.Abp.AutoMapper;
 
 namespace JS.Abp.DataDictionary.Blazor.Server.Host;
