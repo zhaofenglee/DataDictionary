@@ -1,6 +1,5 @@
 using JS.Abp.DataDictionary.DataDictionaries;
 using JS.Abp.DataDictionary.MongoDB;
-using JS.Abp.DataDictionary.Samples;
 using Xunit;
 
 namespace JS.Abp.DataDictionary.MongoDb.Applications;

@@ -61,6 +61,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JS.Abp.DataDictionary.Blazo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JS.Abp.DataDictionary.Mongodb.Web", "host\JS.Abp.DataDictionary.Mongodb\JS.Abp.DataDictionary.Mongodb.Web.csproj", "{F02B7B2B-E507-4918-B19B-C809DFD5CFCB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JS.Abp.DataDictionary.Blazor.Host.Client", "host\JS.Abp.DataDictionary.Blazor.Host.Client\JS.Abp.DataDictionary.Blazor.Host.Client.csproj", "{23619EDB-EA9D-443D-9B55-EC688BBD2357}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -171,6 +173,10 @@ Global
 		{F02B7B2B-E507-4918-B19B-C809DFD5CFCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F02B7B2B-E507-4918-B19B-C809DFD5CFCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F02B7B2B-E507-4918-B19B-C809DFD5CFCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23619EDB-EA9D-443D-9B55-EC688BBD2357}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23619EDB-EA9D-443D-9B55-EC688BBD2357}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23619EDB-EA9D-443D-9B55-EC688BBD2357}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23619EDB-EA9D-443D-9B55-EC688BBD2357}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -202,6 +208,7 @@ Global
 		{F0EE5760-262D-456A-AA7C-E84F484A05F6} = {649A3FFA-182F-4E56-9717-E6A9A2BEC545}
 		{FEA752A1-5B4E-49E9-B1F3-DDC25E41BB52} = {E400416D-2895-4512-9D17-90681EEC7E0A}
 		{F02B7B2B-E507-4918-B19B-C809DFD5CFCB} = {E400416D-2895-4512-9D17-90681EEC7E0A}
+		{23619EDB-EA9D-443D-9B55-EC688BBD2357} = {E400416D-2895-4512-9D17-90681EEC7E0A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BB9B78FB-4F30-1794-15F4-D615ADA46FCA}

@@ -10,7 +10,7 @@ export const environment = {
     logoUrl: '',
   },
   oAuthConfig: {
-    issuer: 'https://localhost:44307/',
+    issuer: 'https://localhost:44332/',
     redirectUri: baseUrl,
     clientId: 'DataDictionary_App',
     responseType: 'code',
@@ -19,11 +19,11 @@ export const environment = {
   },
   apis: {
     default: {
-      url: 'https://localhost:44307',
+      url: 'https://localhost:44332',
       rootNamespace: 'JS.Abp.DataDictionary',
     },
     DataDictionary: {
-      url: 'https://localhost:44334',
+      url: 'https://localhost:44393',
       rootNamespace: 'JS.Abp.DataDictionary',
     },
   },

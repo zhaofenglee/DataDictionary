@@ -15,7 +15,16 @@
             <thead>
             <tr>
                 <abp-row class="mb-3">
+                    <abp-column size="_10">
+                        <form id="SearchFormItem" autocomplete="off">
+                            <div class="input-group">
+                                <input class="form-control page-search-filter-text" id="FilterItemsText" placeholder="@L["Search"]"/>
+                                <abp-button button-type="Primary" type="submit" icon="search"/>
+                            </div>
+                        </form>
 
+
+                    </abp-column>
                     <abp-column Class="justify-content-end" Style="text-align: right">
                         <abp-button id="NewDataDictionaryItemButton" text="@L["NewDataDictionaryItem"].Value" icon="plus" size="Small" button-type="Primary"/>
                     </abp-column>
