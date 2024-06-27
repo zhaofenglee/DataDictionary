@@ -49,17 +49,11 @@
             </Row>
         }
         
-        @if (CanCreateDataDictionary)
-        {
-            <Paragraph TextAlignment="TextAlignment.End">
-                <Button Color="Color.Primary" Style="margin-right: 20px"
-                        Clicked="OpenCreateDataDictionaryItemModalAsync">
-                    <i class="fa fa-plus"></i>@L["NewDataDictionaryItem"]
-                </Button>
-            </Paragraph>
-        }
+       
 
         <Form id="DataDictionarySearchForm" class="mb-3" Style="font-size: small;margin-right: 20px">
+            <Row HorizontalGutter="32" VerticalGutter="16">
+                <Column ColumnSize="ColumnSize.Is10">
             <Addons>
                 <Addon AddonType="AddonType.Body">
                     <TextEdit @bind-Text="@Filter.FilterText"
@@ -73,7 +67,21 @@
                     </SubmitButton>
                 </Addon>
             </Addons>
-        </Form>
+                </Column>
+                <Column Class="justify-content-end" Style="text-align: right" ColumnSize="ColumnSize.Is2">
+                    @if (CanCreateDataDictionary)
+                    {
+                    <Paragraph TextAlignment="TextAlignment.End">
+                        <Button Color="Color.Primary" 
+                                Clicked="OpenCreateDataDictionaryItemModalAsync">
+                            <i class="fa fa-plus"></i>@L["NewDataDictionaryItem"]
+                        </Button>
+                    </Paragraph>
+                    }
+                </Column>
+            </Row>
+        </Form>  
+
         
         <DataGrid TItem="DataDictionaryItemWithNavigationPropertiesDto"
                   Data="DataDictionaryItemList"

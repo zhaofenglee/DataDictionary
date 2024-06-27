@@ -106,7 +106,9 @@ namespace JS.Abp.DataDictionary.Blazor.Pages
         private  async Task DownloadAsExcelAsync()
         {
             var token = (await DataDictionariesAppService.GetDownloadTokenAsync()).Token;
-            NavigationManager.NavigateTo($"/api/app/data-dictionaries/as-excel-file?DownloadToken={token}&FilterText={Filter.FilterText}", forceLoad: true);
+            var remoteService = await RemoteServiceConfigurationProvider.GetConfigurationOrDefaultOrNullAsync("DataDictionary") ??
+                                await RemoteServiceConfigurationProvider.GetConfigurationOrDefaultOrNullAsync("Default");
+            NavigationManager.NavigateTo($"{remoteService?.BaseUrl.EnsureEndsWith('/') ?? string.Empty}api/data-dictionary/data-dictionaries/as-excel-file?DownloadToken={token}&FilterText={Filter.FilterText}", forceLoad: true);
         }
 
         private async Task OnDataGridReadAsync(DataGridReadDataEventArgs<DataDictionaryDto> e)
