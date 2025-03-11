@@ -26,7 +26,12 @@ namespace JS.Abp.DataDictionary.Web.Pages.DataDictionary.DataDictionaries
 
         public virtual async Task OnGetAsync()
         {
-            DataDictionary = new DataDictionaryCreateViewModel();
+            DataDictionary = new DataDictionaryCreateViewModel()
+            {
+                IsActive = true
+            };
+            
+            
 
             await Task.CompletedTask;
         }
