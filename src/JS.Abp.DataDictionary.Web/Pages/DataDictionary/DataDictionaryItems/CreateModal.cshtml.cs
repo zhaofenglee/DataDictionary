@@ -36,6 +36,7 @@ namespace JS.Abp.DataDictionary.Web.Pages.DataDictionary.DataDictionaryItems
             DataDictionaryItem = new DataDictionaryItemCreateViewModel()
             {
                 DataDictionaryId = DataDictionaryId,
+                IsActive = true
             };
             DataDictionaryLookupList.AddRange((
                                     await _dataDictionaryItemsAppService.GetDataDictionaryLookupAsync(new LookupRequestDto
