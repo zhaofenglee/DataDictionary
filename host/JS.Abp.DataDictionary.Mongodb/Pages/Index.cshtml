@@ -1,9 +1,10 @@
 ﻿@page
 @using Microsoft.AspNetCore.Mvc.Localization
 @using JS.Abp.DataDictionary.Localization
+@using Volo.Abp.Users
 @inject IHtmlLocalizer<DataDictionaryResource> L
 @model JS.Abp.DataDictionary.Pages.IndexModel
-
+@inject ICurrentUser CurrentUser
 @section styles {
     <abp-style src="/Pages/Index.cshtml.css" />
 }
@@ -17,7 +18,13 @@
                 @L["Welcome_Title"]
             </abp-card-title>
         </abp-card-header>
-        <abp-card-body>            
+        <abp-card-body>
+            @if (!CurrentUser.IsAuthenticated)
+            {
+                <h3>@L["Welcome"]</h3>
+                <p class="lead text-muted mb-2">@L["LongWelcomeMessage"]</p>
+                <a href="/Account/Login" class="btn btn-primary mb-4"><i class="fa-solid fa-right-to-bracket me-1"></i><span>@L["Login"]</span></a>
+            }
             @L["Welcome_Text"]
         </abp-card-body>
     </abp-card>

@@ -22,10 +22,10 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
 
         public virtual async Task<DataDictionaryItemWithNavigationProperties> GetWithNavigationPropertiesAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            var dataDictionaryItem = await (await GetMongoQueryableAsync(cancellationToken))
+            var dataDictionaryItem = await (await GetQueryableAsync(cancellationToken))
                 .FirstOrDefaultAsync(e => e.Id == id, GetCancellationToken(cancellationToken));
 
-            var dataDictionary = await (await GetMongoQueryableAsync<DataDictionaries.DataDictionary>(cancellationToken)).FirstOrDefaultAsync(e => e.Id == dataDictionaryItem.DataDictionaryId, cancellationToken: cancellationToken);
+            var dataDictionary = await (await GetQueryableAsync<DataDictionaries.DataDictionary>(cancellationToken)).FirstOrDefaultAsync(e => e.Id == dataDictionaryItem.DataDictionaryId, cancellationToken: cancellationToken);
 
             return new DataDictionaryItemWithNavigationProperties
             {
@@ -49,17 +49,16 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
             int skipCount = 0,
             CancellationToken cancellationToken = default)
         {
-            var query = ApplyFilter((await GetMongoQueryableAsync(cancellationToken)), filterText, sequenceMin, sequenceMax, code, displayText, description, isActive, dataDictionaryId);
+            var query = ApplyFilter((await GetQueryableAsync(cancellationToken)), filterText, sequenceMin, sequenceMax, code, displayText, description, isActive, dataDictionaryId);
             var dataDictionaryItems = await query.OrderBy(string.IsNullOrWhiteSpace(sorting) ? DataDictionaryItemConsts.GetDefaultSorting(false) : sorting.Split('.').Last())
-                .As<IMongoQueryable<DataDictionaryItem>>()
-                .PageBy<DataDictionaryItem, IMongoQueryable<DataDictionaryItem>>(skipCount, maxResultCount)
+                .PageBy(skipCount, maxResultCount)
                 .ToListAsync(GetCancellationToken(cancellationToken));
 
             var dbContext = await GetDbContextAsync(cancellationToken);
             return dataDictionaryItems.Select(s => new DataDictionaryItemWithNavigationProperties
             {
                 DataDictionaryItem = s,
-                DataDictionary = ApplyDataFilters<IMongoQueryable<DataDictionaries.DataDictionary>, DataDictionaries.DataDictionary>(dbContext.Collection<DataDictionaries.DataDictionary>().AsQueryable()).FirstOrDefault(e => e.Id == s.DataDictionaryId),
+                DataDictionary = ApplyDataFilters<IQueryable<DataDictionaries.DataDictionary>, DataDictionaries.DataDictionary>(dbContext.Collection<DataDictionaries.DataDictionary>().AsQueryable()).First(e => e.Id == s.DataDictionaryId),
 
             }).ToList();
         }
@@ -77,10 +76,10 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
             int skipCount = 0,
             CancellationToken cancellationToken = default)
         {
-            var query = ApplyFilter((await GetMongoQueryableAsync(cancellationToken)), filterText, sequenceMin, sequenceMax, code, displayText, description, isActive);
+            var query = ApplyFilter((await GetQueryableAsync(cancellationToken)), filterText, sequenceMin, sequenceMax, code, displayText, description, isActive);
             query = query.OrderBy(string.IsNullOrWhiteSpace(sorting) ? DataDictionaryItemConsts.GetDefaultSorting(false) : sorting);
-            return await query.As<IMongoQueryable<DataDictionaryItem>>()
-                .PageBy<DataDictionaryItem, IMongoQueryable<DataDictionaryItem>>(skipCount, maxResultCount)
+            return await query
+                .PageBy(skipCount, maxResultCount)
                 .ToListAsync(GetCancellationToken(cancellationToken));
         }
 
@@ -95,8 +94,8 @@ namespace JS.Abp.DataDictionary.DataDictionaryItems
             Guid? dataDictionaryId = null,
             CancellationToken cancellationToken = default)
         {
-            var query = ApplyFilter((await GetMongoQueryableAsync(cancellationToken)), filterText, sequenceMin, sequenceMax, code, displayText, description, isActive, dataDictionaryId);
-            return await query.As<IMongoQueryable<DataDictionaryItem>>().LongCountAsync(GetCancellationToken(cancellationToken));
+            var query = ApplyFilter((await GetQueryableAsync(cancellationToken)), filterText, sequenceMin, sequenceMax, code, displayText, description, isActive, dataDictionaryId);
+            return await query.LongCountAsync(GetCancellationToken(cancellationToken));
         }
 
         protected virtual IQueryable<DataDictionaryItem> ApplyFilter(
