@@ -23,12 +23,12 @@ namespace JS.Abp.DataDictionary.DataDictionaries
 
         public async Task<DataDictionary?> FindByCodeAsync(string code, CancellationToken cancellationToken = default)
         {
-            var dataDictionary = await (await GetMongoQueryableAsync<DataDictionaries.DataDictionary>(cancellationToken)).FirstOrDefaultAsync(e => e.Code ==code && e.IsActive, cancellationToken: cancellationToken);
+            var dataDictionary = await (await GetQueryableAsync(cancellationToken)).FirstOrDefaultAsync(e => e.Code ==code && e.IsActive, cancellationToken: cancellationToken);
             if (dataDictionary == null)
             {
                 return null;
             }
-            var dataDictionaryItem =  (await GetMongoQueryableAsync<DataDictionaryItem>(cancellationToken)).Where(e => e.DataDictionaryId == dataDictionary.Id && e.IsActive);
+            var dataDictionaryItem =  (await GetQueryableAsync<DataDictionaryItem>(cancellationToken)).Where(e => e.DataDictionaryId == dataDictionary.Id && e.IsActive);
             dataDictionary.AddItem(new Collection<DataDictionaryItem>(dataDictionaryItem.ToList()));
             return dataDictionary;
         }
@@ -44,10 +44,10 @@ namespace JS.Abp.DataDictionary.DataDictionaries
             int skipCount = 0,
             CancellationToken cancellationToken = default)
         {
-            var query = ApplyFilter((await GetMongoQueryableAsync(cancellationToken)), filterText, code, displayText, description, isActive);
+            var query = ApplyFilter((await GetQueryableAsync(cancellationToken)), filterText, code, displayText, description, isActive);
             query = query.OrderBy(string.IsNullOrWhiteSpace(sorting) ? DataDictionaryConsts.GetDefaultSorting(false) : sorting);
-            return await query.As<IMongoQueryable<DataDictionary>>()
-                .PageBy<DataDictionary, IMongoQueryable<DataDictionary>>(skipCount, maxResultCount)
+            return await query
+                .PageBy(skipCount, maxResultCount)
                 .ToListAsync(GetCancellationToken(cancellationToken));
         }
 
@@ -59,8 +59,8 @@ namespace JS.Abp.DataDictionary.DataDictionaries
             bool? isActive = null,
             CancellationToken cancellationToken = default)
         {
-            var query = ApplyFilter((await GetMongoQueryableAsync(cancellationToken)), filterText, code, displayText, description, isActive);
-            return await query.As<IMongoQueryable<DataDictionary>>().LongCountAsync(GetCancellationToken(cancellationToken));
+            var query = ApplyFilter((await GetQueryableAsync(cancellationToken)), filterText, code, displayText, description, isActive);
+            return await query.LongCountAsync(GetCancellationToken(cancellationToken));
         }
 
         protected virtual IQueryable<DataDictionary> ApplyFilter(
