@@ -4,18 +4,18 @@ using JS.Abp.DataDictionary.Localization;
 using JS.Abp.DataDictionary.Web.Menus;
 using Volo.Abp.AspNetCore.Mvc.Localization;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
-using Volo.Abp.AutoMapper;
 using Volo.Abp.Modularity;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
 using JS.Abp.DataDictionary.Permissions;
+using Volo.Abp.Mapperly;
 
 namespace JS.Abp.DataDictionary.Web;
 
 [DependsOn(
     typeof(DataDictionaryApplicationContractsModule),
     typeof(AbpAspNetCoreMvcUiThemeSharedModule),
-    typeof(AbpAutoMapperModule)
+    typeof(AbpMapperlyModule)
     )]
 public class DataDictionaryWebModule : AbpModule
 {
@@ -44,11 +44,7 @@ public class DataDictionaryWebModule : AbpModule
             options.FileSets.AddEmbedded<DataDictionaryWebModule>();
         });
 
-        context.Services.AddAutoMapperObjectMapper<DataDictionaryWebModule>();
-        Configure<AbpAutoMapperOptions>(options =>
-        {
-            options.AddMaps<DataDictionaryWebModule>(validate: true);
-        });
+        context.Services.AddMapperlyObjectMapper<DataDictionaryWebModule>();
 
         Configure<RazorPagesOptions>(options =>
         {

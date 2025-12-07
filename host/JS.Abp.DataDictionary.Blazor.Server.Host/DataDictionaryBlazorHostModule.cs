@@ -57,7 +57,6 @@ using JS.Abp.DataDictionary.Blazor.Server.Host.Demos;
 using Microsoft.Extensions.Options;
 using Volo.Abp.AspNetCore.Components.Server;
 using Volo.Abp.AspNetCore.Components.Web;
-using Volo.Abp.AutoMapper;
 
 namespace JS.Abp.DataDictionary.Blazor.Server.Host;
 
@@ -144,11 +143,7 @@ public class DataDictionaryBlazorHostModule : AbpModule
         });
 
         
-        context.Services.AddAutoMapperObjectMapper<DataDictionaryBlazorHostModule>();
-        Configure<AbpAutoMapperOptions>(options =>
-        {
-            options.AddMaps<DataDictionaryHostAutoMapperProfile>(validate: true);
-        });
+        context.Services.AddMapperlyObjectMapper<DataDictionaryBlazorHostModule>();
 
         Configure<AbpDbContextOptions>(options =>
         {
