@@ -21,6 +21,18 @@ namespace JS.Abp.DataDictionary.DataDictionaries
 
         }
 
+        public override async Task<DataDictionary> GetAsync(Guid id, bool includeDetails = true, CancellationToken cancellationToken = default)
+        {
+            var dataDictionary = await base.GetAsync(id, includeDetails, cancellationToken);
+            if (includeDetails)
+            {
+                var dataDictionaryItems = (await GetDbContextAsync()).DataDictionaryItems
+                    .Where(e => e.DataDictionaryId == dataDictionary.Id);
+                dataDictionary.AddItem(new Collection<DataDictionaryItem>(dataDictionaryItems.ToList()));
+            }
+            return dataDictionary;
+        }
+
         public async Task<DataDictionary?> FindByCodeAsync(string code, CancellationToken cancellationToken = default)
         {
             var dataDictionary = (await GetQueryableAsync()).FirstOrDefault(e => e.Code == code && e.IsActive);
@@ -46,7 +58,18 @@ namespace JS.Abp.DataDictionary.DataDictionaries
         {
             var query = ApplyFilter((await GetQueryableAsync()), filterText, code, displayText, description, isStatic);
             query = query.OrderBy(string.IsNullOrWhiteSpace(sorting) ? DataDictionaryConsts.GetDefaultSorting(false) : sorting);
-            return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancellationToken);
+            var dataDictionaries = await query.PageBy(skipCount, maxResultCount).ToListAsync(cancellationToken);
+            
+            // Load Items collection for each DataDictionary
+            var dbContext = await GetDbContextAsync();
+            foreach (var dataDictionary in dataDictionaries)
+            {
+                var items = dbContext.DataDictionaryItems
+                    .Where(e => e.DataDictionaryId == dataDictionary.Id);
+                dataDictionary.AddItem(new Collection<DataDictionaryItem>(items.ToList()));
+            }
+            
+            return dataDictionaries;
         }
 
         public async Task<long> GetCountAsync(
