@@ -10,10 +10,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="10.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="$(MicrosoftAspNetCorePackageVersion)" />
     <ProjectReference Include="..\..\src\JS.Abp.DataDictionary.EntityFrameworkCore\JS.Abp.DataDictionary.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\JS.Abp.DataDictionary.Application.Tests\JS.Abp.DataDictionary.Application.Tests.csproj" />
-    <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="10.0.0" />
+    <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="$(VoloAbpPackageVersion)" />
 
   </ItemGroup>
 
