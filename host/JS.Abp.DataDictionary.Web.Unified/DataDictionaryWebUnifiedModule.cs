@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using JS.Abp.DataDictionary.EntityFrameworkCore;
 using JS.Abp.DataDictionary.MultiTenancy;
 using JS.Abp.DataDictionary.Web;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.Swagger;
 using Volo.Abp;
 using Volo.Abp.Account;
