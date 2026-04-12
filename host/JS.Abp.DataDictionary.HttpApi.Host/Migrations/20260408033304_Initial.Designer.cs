@@ -13,8 +13,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace JS.Abp.DataDictionary.Migrations
 {
     [DbContext(typeof(DataDictionaryHttpApiHostMigrationsDbContext))]
-    [Migration("20240524060424_add_dataductionary_module")]
-    partial class add_dataductionary_module
+    [Migration("20260408033304_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,7 +22,7 @@ namespace JS.Abp.DataDictionary.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("_Abp_DatabaseProvider", EfCoreDatabaseProvider.SqlServer)
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "10.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
