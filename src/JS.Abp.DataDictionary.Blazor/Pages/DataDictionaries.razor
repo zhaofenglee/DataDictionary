@@ -35,10 +35,10 @@
         <Form id="DataDictionarySearchForm" class="mb-3">
             <Addons>
                 <Addon AddonType="AddonType.Body">
-                    <TextEdit @bind-Text="@Filter.FilterText"
+                    <TextInput @bind-Value="@Filter.FilterText"
                               Autofocus="true"
                               Placeholder="@L["Search"]">
-                    </TextEdit>
+                    </TextInput>
                 </Addon>
                 <Addon AddonType="AddonType.End">
                     <SubmitButton Form="DataDictionarySearchForm" Clicked="GetDataDictionariesAsync">
@@ -66,15 +66,15 @@
                         <EntityActions TItem="DataDictionaryDto" EntityActionsColumn="@EntityActionsColumn">
                             <EntityAction TItem="DataDictionaryDto"
                                           Visible="true"
-                                          Clicked="async () => await OpenEditDataDictionaryDetailModalAsync(context)"
+                                          Clicked="async () => await OpenEditDataDictionaryDetailModalAsync(context.Item)"
                                           Text="@L["EditDetails"]"></EntityAction>
                             <EntityAction TItem="DataDictionaryDto"
                                           Visible="@CanEditDataDictionary"
-                                          Clicked="async () => await OpenEditDataDictionaryModalAsync(context)"
+                                          Clicked="async () => await OpenEditDataDictionaryModalAsync(context.Item)"
                                           Text="@L["Edit"]"></EntityAction>
                             <EntityAction TItem="DataDictionaryDto"
                                           Visible="@CanDeleteDataDictionary"
-                                          Clicked="() => DeleteDataDictionaryAsync(context)"
+                                          Clicked="() => DeleteDataDictionaryAsync(context.Item)"
                                           ConfirmationMessage="@(()=> L["DeleteConfirmationMessage"])"
                                           Text="@L["Delete"]"></EntityAction>
                         </EntityActions>
@@ -100,7 +100,7 @@
                       Field="IsActive"
                       Caption="@L["IsActive"]">
                     <DisplayTemplate>
-                        @if (context.IsActive)
+                        @if (context.Item.IsActive)
                         {
                             <Icon TextColor="TextColor.Success" Name="@IconName.Check" />
                         }
@@ -118,8 +118,8 @@
 </Card>
 
 @* ************************* CREATE MODAL ************************* *@
-<Modal @ref="CreateDataDictionaryModal" Closing="@CreateDataDictionaryModal.CancelClosingModalWhenFocusLost">
-    <ModalContent Centered="true">
+<Modal @ref="CreateDataDictionaryModal" Closing="@CreateDataDictionaryModal.CancelClosingModalWhenFocusLost" Centered="true">
+    <ModalContent>
         <Form id="CreateDataDictionaryForm">
             <ModalHeader>
                 <ModalTitle>@L["NewDataDictionary"]</ModalTitle>
@@ -135,11 +135,11 @@
                     <Validation>
                         <Field>
                             <FieldLabel>@L["DataDictionary:Code"] *</FieldLabel>
-                            <TextEdit @bind-Text="@NewDataDictionary.Code" MaxLength="DataDictionaryConsts.CodeMaxLength">
+                            <TextInput @bind-Value="@NewDataDictionary.Code" MaxLength="DataDictionaryConsts.CodeMaxLength">
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>
-                            </TextEdit>
+                            </TextInput>
                         </Field>
                     </Validation>
 
@@ -147,11 +147,11 @@
                     <Validation>
                         <Field>
                             <FieldLabel>@L["DisplayText"] *</FieldLabel>
-                            <TextEdit @bind-Text="@NewDataDictionary.DisplayText" MaxLength="DataDictionaryConsts.DisplayTextMaxLength">
+                            <TextInput @bind-Value="@NewDataDictionary.DisplayText" MaxLength="DataDictionaryConsts.DisplayTextMaxLength">
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>
-                            </TextEdit>
+                            </TextInput>
                         </Field>
                     </Validation>
 
@@ -159,17 +159,17 @@
                     <Validation>
                         <Field>
                             <FieldLabel>@L["Description"]</FieldLabel>
-                            <TextEdit @bind-Text="@NewDataDictionary.Description" MaxLength="DataDictionaryConsts.DescriptionMaxLength">
+                            <TextInput @bind-Value="@NewDataDictionary.Description" MaxLength="DataDictionaryConsts.DescriptionMaxLength">
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>
-                            </TextEdit>
+                            </TextInput>
                         </Field>
                     </Validation>
 
 
                     <Field>
-                        <Check TValue="bool" @bind-Checked="@NewDataDictionary.IsActive">@L["IsActive"]</Check>
+                        <Check TValue="bool" @bind-Value="@NewDataDictionary.IsActive">@L["IsActive"]</Check>
                     </Field>
 
                     
@@ -188,8 +188,8 @@
 </Modal>
 
 @* ************************* EDIT MODAL ************************* *@
-<Modal @ref="EditDataDictionaryModal" Closing="@EditDataDictionaryModal.CancelClosingModalWhenFocusLost">
-    <ModalContent Centered="true">
+<Modal @ref="EditDataDictionaryModal" Closing="@EditDataDictionaryModal.CancelClosingModalWhenFocusLost" Centered="true">
+    <ModalContent>
         <Form id="EditDataDictionaryForm">
             <ModalHeader>
                 <ModalTitle>@L["Update"]</ModalTitle>
@@ -205,11 +205,11 @@
                     <Validation>
                         <Field>
                             <FieldLabel>@L["DataDictionary:Code"] *</FieldLabel>
-                            <TextEdit @bind-Text="@EditingDataDictionary.Code" MaxLength="DataDictionaryConsts.CodeMaxLength">
+                            <TextInput @bind-Value="@EditingDataDictionary.Code" MaxLength="DataDictionaryConsts.CodeMaxLength">
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>
-                            </TextEdit>
+                            </TextInput>
                         </Field>
                     </Validation>
 
@@ -217,11 +217,11 @@
                     <Validation>
                         <Field>
                             <FieldLabel>@L["DisplayText"] *</FieldLabel>
-                            <TextEdit @bind-Text="@EditingDataDictionary.DisplayText" MaxLength="DataDictionaryConsts.DisplayTextMaxLength">
+                            <TextInput @bind-Value="@EditingDataDictionary.DisplayText" MaxLength="DataDictionaryConsts.DisplayTextMaxLength">
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>
-                            </TextEdit>
+                            </TextInput>
                         </Field>
                     </Validation>
 
@@ -229,17 +229,17 @@
                     <Validation>
                         <Field>
                             <FieldLabel>@L["Description"]</FieldLabel>
-                            <TextEdit @bind-Text="@EditingDataDictionary.Description" MaxLength="DataDictionaryConsts.DescriptionMaxLength">
+                            <TextInput @bind-Value="@EditingDataDictionary.Description" MaxLength="DataDictionaryConsts.DescriptionMaxLength">
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>
-                            </TextEdit>
+                            </TextInput>
                         </Field>
                     </Validation>
 
 
                     <Field>
-                        <Check TValue="bool" @bind-Checked="@EditingDataDictionary.IsActive">@L["IsActive"]</Check>
+                        <Check TValue="bool" @bind-Value="@EditingDataDictionary.IsActive">@L["IsActive"]</Check>
                     </Field>
 
                     

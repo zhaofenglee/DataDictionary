@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace JS.Abp.DataDictionary.Migrations
 {
     /// <inheritdoc />
-    public partial class add_dataductionary_module : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
